@@ -1,0 +1,24 @@
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.util.Optional;
+
+import static org.testng.Assert.*;
+
+public class BoardTest {
+    @Test
+    public void newBoardHasNoWinner() {
+        Board board = new Board(3, 3);
+        Optional<PlayerSign> winner = board.getWinner();
+        assertEquals(winner, Optional.empty());
+    }
+
+    @Test
+    public void ifBoardHasRowWithSameSignsThisSignShouldWin() {
+        Board board = new Board(3, 3);
+        for(int i = 0; i < 3; i++)
+            board.put(PlayerSign.X, 0, i);
+        Optional<PlayerSign> winner = board.getWinner();
+        assertEquals(winner, Optional.of(PlayerSign.X));
+    }
+}
