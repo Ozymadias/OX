@@ -1,53 +1,53 @@
 import java.util.Optional;
 
 class Board {
-    private PlayerSign[][] board;
+    private Sign[][] board;
     private int numberOfRows;
     private int numberOfColumns;
     private int winningNumber;
 
     Board(int numberOfRows, int numberOfColumns, int winningNumber) {
-        this.board = new PlayerSign[numberOfRows][numberOfColumns];
+        this.board = new Sign[numberOfRows][numberOfColumns];
         this.numberOfColumns = numberOfColumns;
         this.numberOfRows = numberOfRows;
         this.winningNumber = winningNumber;
     }
 
     Board(int numberOfRows, int numberOfColumns) {
-        this.board = new PlayerSign[numberOfRows][numberOfColumns];
+        this.board = new Sign[numberOfRows][numberOfColumns];
         this.numberOfColumns = numberOfColumns;
         this.numberOfRows = numberOfRows;
     }
 
-    Optional<PlayerSign> getWinner() {
-        Optional<PlayerSign> sign1 = checkRows();
+    Optional<Sign> getWinner() {
+        Optional<Sign> sign1 = checkRows();
         if (sign1.isPresent()) return sign1;
-        Optional<PlayerSign> sign = checkColumns();
+        Optional<Sign> sign = checkColumns();
         if (sign.isPresent()) return sign;
         return Optional.empty();
     }
 
-    private Optional<PlayerSign> checkRows() {
+    private Optional<Sign> checkRows() {
         for (int i = 0; i < numberOfRows; i++) {
-            Optional<PlayerSign> sign = checkIfRowsContainsOnlySameSigns(i);
+            Optional<Sign> sign = checkIfRowContainsOnlySameSigns(i);
             if (sign.isPresent())
                 return sign;
         }
         return Optional.empty();
     }
 
-    private Optional<PlayerSign> checkColumns() {
+    private Optional<Sign> checkColumns() {
         for (int i = 0; i < numberOfColumns; i++) {
-            Optional<PlayerSign> sign = checkIfColumnsContainsOnlySameSigns(i);
+            Optional<Sign> sign = checkIfColumnContainsOnlySameSigns(i);
             if (sign.isPresent())
                 return sign;
         }
         return Optional.empty();
     }
 
-    private Optional<PlayerSign> checkIfColumnsContainsOnlySameSigns(int columnNumber) {
+    private Optional<Sign> checkIfColumnContainsOnlySameSigns(int columnNumber) {
         int numberOfOccurrence = 0;
-        PlayerSign sign = null;
+        Sign sign = null;
         for (int i = 0; i < numberOfRows; i++) {
             if (board[i][columnNumber] == sign) {
                 numberOfOccurrence++;
@@ -61,23 +61,48 @@ class Board {
         return Optional.empty();
     }
 
-    private Optional<PlayerSign> checkIfRowsContainsOnlySameSigns(int rowNumber) {
+    private Optional<Sign> checkIfRowContainsOnlySameSigns(int rowNumber) {
         int numberOfOccurrence = 0;
-        PlayerSign sign = null;
-        for (int i = 0; i < numberOfRows; i++) {
-            if (board[rowNumber][i] == sign) {
+        Sign sign = null;
+        for (int j = 0; j < numberOfColumns; j++) {
+            if (board[rowNumber][j] == sign) {
                 numberOfOccurrence++;
                 if (numberOfOccurrence == winningNumber && sign != null)
                     return Optional.of(sign);
             } else {
-                sign = board[rowNumber][i];
+                sign = board[rowNumber][j];
                 numberOfOccurrence = 1;
             }
         }
         return Optional.empty();
     }
 
-    void put(PlayerSign playerSign, int rowNumber, int columnNumber) {
-        board[rowNumber][columnNumber] = playerSign;
+    void put(Sign sign, int rowNumber, int columnNumber) {
+        board[rowNumber][columnNumber] = sign;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < numberOfRows; i++) {
+            for (int j = 0; j < numberOfColumns; j++) {
+                stringBuilder.append(board[i][j] != null ? board[i][j] : " ");
+                if (j != numberOfColumns - 1) {
+                    stringBuilder.append("|");
+                }
+            }
+            stringBuilder.append("\n");
+            if(i != numberOfRows - 1) {
+                for (int j = 0; j < 2 * numberOfColumns - 1; j++) {
+                    stringBuilder.append("_");
+                }
+                stringBuilder.append("\n");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public void put(Sign sign, Position position) {
+        board[position.getRowNb()][position.getColumnNb()] = sign;
     }
 }

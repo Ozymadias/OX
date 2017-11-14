@@ -1,3 +1,0 @@
-enum PlayerSign {
-    X
-}
