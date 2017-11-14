@@ -1,17 +1,9 @@
-import java.util.Optional;
-
 class Board {
     private Sign[][] board;
     private int numberOfRows;
     private int numberOfColumns;
-    private int winningNumber;
-
-    Board(int numberOfRows, int numberOfColumns, int winningNumber) {
-        this.board = new Sign[numberOfRows][numberOfColumns];
-        this.numberOfColumns = numberOfColumns;
-        this.numberOfRows = numberOfRows;
-        this.winningNumber = winningNumber;
-    }
+    private Position currentPosition;
+    private Sign currentSign;
 
     Board(int numberOfRows, int numberOfColumns) {
         this.board = new Sign[numberOfRows][numberOfColumns];
@@ -19,66 +11,10 @@ class Board {
         this.numberOfRows = numberOfRows;
     }
 
-    Optional<Sign> getWinner() {
-        Optional<Sign> sign1 = checkRows();
-        if (sign1.isPresent()) return sign1;
-        Optional<Sign> sign = checkColumns();
-        if (sign.isPresent()) return sign;
-        return Optional.empty();
-    }
-
-    private Optional<Sign> checkRows() {
-        for (int i = 0; i < numberOfRows; i++) {
-            Optional<Sign> sign = checkIfRowContainsOnlySameSigns(i);
-            if (sign.isPresent())
-                return sign;
-        }
-        return Optional.empty();
-    }
-
-    private Optional<Sign> checkColumns() {
-        for (int i = 0; i < numberOfColumns; i++) {
-            Optional<Sign> sign = checkIfColumnContainsOnlySameSigns(i);
-            if (sign.isPresent())
-                return sign;
-        }
-        return Optional.empty();
-    }
-
-    private Optional<Sign> checkIfColumnContainsOnlySameSigns(int columnNumber) {
-        int numberOfOccurrence = 0;
-        Sign sign = null;
-        for (int i = 0; i < numberOfRows; i++) {
-            if (board[i][columnNumber] == sign) {
-                numberOfOccurrence++;
-                if (numberOfOccurrence == winningNumber && sign != null)
-                    return Optional.of(sign);
-            } else {
-                sign = board[i][columnNumber];
-                numberOfOccurrence = 1;
-            }
-        }
-        return Optional.empty();
-    }
-
-    private Optional<Sign> checkIfRowContainsOnlySameSigns(int rowNumber) {
-        int numberOfOccurrence = 0;
-        Sign sign = null;
-        for (int j = 0; j < numberOfColumns; j++) {
-            if (board[rowNumber][j] == sign) {
-                numberOfOccurrence++;
-                if (numberOfOccurrence == winningNumber && sign != null)
-                    return Optional.of(sign);
-            } else {
-                sign = board[rowNumber][j];
-                numberOfOccurrence = 1;
-            }
-        }
-        return Optional.empty();
-    }
-
     void put(Sign sign, int rowNumber, int columnNumber) {
         board[rowNumber][columnNumber] = sign;
+        currentPosition = new Position(rowNumber, columnNumber);
+        currentSign = sign;
     }
 
     @Override
@@ -104,5 +40,27 @@ class Board {
 
     public void put(Sign sign, Position position) {
         board[position.getRowNb()][position.getColumnNb()] = sign;
+        currentPosition = position;
+        currentSign = sign;
+    }
+
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    public int getNumberOfColumns() {
+        return numberOfColumns;
+    }
+
+    public Position getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public Sign get(int i, int j) {
+        return board[i][j];
+    }
+
+    public Sign getCurrentSign() {
+        return currentSign;
     }
 }

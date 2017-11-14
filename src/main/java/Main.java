@@ -14,7 +14,8 @@ public class Main {
         output.print("podaj liczbe znakow niezbedna do wygranej");
         int winningNb = input.getInt();
 
-        Board board = new Board(nbOfRows, nbOfColumns, winningNb);
+        Board board = new Board(nbOfRows, nbOfColumns);
+        Judge judge = new Judge(winningNb, board);
 
         Optional<Sign> winner = Optional.empty();
 
@@ -27,7 +28,7 @@ public class Main {
             int y = input.getInt();
             Position position = new Position(x, y);
             board.put(currentSign, position);
-            winner = board.getWinner();
+            winner = judge.getWinner();
             currentSign = currentSign.change();
         }
 
