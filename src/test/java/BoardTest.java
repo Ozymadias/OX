@@ -1,3 +1,4 @@
+import endgame.Sign;
 import org.testng.annotations.Test;
 
 import java.util.Optional;

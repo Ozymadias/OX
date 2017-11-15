@@ -1,4 +1,8 @@
-class Board {
+import coregame.Observer;
+import coregame.Position;
+import endgame.Sign;
+
+class Board implements Observer{
     private Sign[][] board;
     private int numberOfRows;
     private int numberOfColumns;
@@ -57,10 +61,17 @@ class Board {
     }
 
     public Sign get(int i, int j) {
-        return board[i][j];
+        if (0 <= i && i < numberOfRows && 0 <= j && j < numberOfColumns)
+            return board[i][j];
+        return null;
     }
 
     public Sign getCurrentSign() {
         return currentSign;
+    }
+
+    @Override
+    public void inform() {
+        //put(move);
     }
 }

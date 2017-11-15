@@ -1,10 +1,16 @@
+import endgame.JudgeLeaningTowardsOO;
+import endgame.Sign;
+import endgame.WinCondition;
+
 import java.util.Optional;
 
 public class Judge {
+    private JudgeLeaningTowardsOO judge;
     private int winningNumber;
     private Board board;
 
     public Judge(int winningNumber, Board board) {
+        //this.judge = new JudgeLeaningTowardsOO(new WinCondition(winningNumber), board);
         this.winningNumber = winningNumber;
         this.board = board;
     }
@@ -26,14 +32,13 @@ public class Judge {
         int rowsNb = board.getNumberOfRows();
         int currentRow = board.getCurrentPosition().getRowNb();
 
-        for (int i = currentRow - 1; i >= 0; i--) {
-            if (board.get(i, columnNumber) == sign)
-                numberOfOccurrences++;
-            else
-                break;
+        int i = currentRow - 1;
+        while (board.get(i, columnNumber) == sign) {
+            numberOfOccurrences++;
+            i--;
         }
-        for (int i = currentRow + 1; i < rowsNb; i++) {
-            if (board.get(i, columnNumber) == sign)
+        for (int j = currentRow + 1; j < rowsNb; i++) {
+            if (board.get(j, columnNumber) == sign)
                 numberOfOccurrences++;
             else
                 break;

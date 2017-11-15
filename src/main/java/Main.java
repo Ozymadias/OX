@@ -1,3 +1,6 @@
+import coregame.*;
+import endgame.*;
+
 import java.util.Optional;
 
 public class Main {
@@ -20,6 +23,10 @@ public class Main {
         Optional<Sign> winner = Optional.empty();
 
         Sign currentSign = Sign.X;
+        JudgeLeaningTowardsOO ooJudge = new JudgeLeaningTowardsOO(new WinCondition(winningNb), new BoardOO());
+
+
+        AllMoves allMoves = new AllMovesLinkedList();
 
         while (!winner.isPresent()) {
             output.print(board.toString());
@@ -27,9 +34,16 @@ public class Main {
             int x = input.getInt();
             int y = input.getInt();
             Position position = new Position(x, y);
+            //if (currentSign.equals(Sign.X))
+            //    ooJudge.updateXSequences(new XField());
+            //else
+            //    ooJudge.updateOSequences(new OField());
             board.put(currentSign, position);
             winner = judge.getWinner();
             currentSign = currentSign.change();
+
+            Move move = new Move(currentSign, position);
+            allMoves.add(move);
         }
 
         output.print(board.toString());
