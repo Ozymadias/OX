@@ -6,6 +6,8 @@ public class Main {
     public static void main(String[] args) {
         Input input = new Input();
         Output output = new Output();
+        Player first = new LocalPlayer();
+        Player second = new LocalPlayer();
 
         output.print("Witaj w grze OX");
 
@@ -26,9 +28,7 @@ public class Main {
         while (!winner.isPresent()) {
             output.print(board.toString());
             output.print("podaj lokacje do umieszczenia znaku");
-            int x = input.getInt();
-            int y = input.getInt();
-            Position position = new Position(x, y);
+            Position position = first.makeMove();
             board.put(currentSign, position);
             winner = judge.getWinner();
             currentSign = currentSign.change();
