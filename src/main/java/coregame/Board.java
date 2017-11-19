@@ -1,6 +1,5 @@
 package coregame;
 
-
 public class Board {
     private Sign[][] board;
     private int numberOfRows;
@@ -31,7 +30,7 @@ public class Board {
                 }
             }
             stringBuilder.append("\n");
-            if(i != numberOfRows - 1) {
+            if (i != numberOfRows - 1) {
                 for (int j = 0; j < 2 * numberOfColumns - 1; j++) {
                     stringBuilder.append("_");
                 }
