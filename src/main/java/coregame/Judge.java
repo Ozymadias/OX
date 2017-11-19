@@ -34,7 +34,7 @@ public class Judge {
             numberOfOccurrences++;
             i--;
         }
-        for (int j = currentRow + 1; j < rowsNb; i++) {
+        for (int j = currentRow + 1; j < rowsNb; j++) {
             if (board.get(j, columnNumber) == sign)
                 numberOfOccurrences++;
             else
