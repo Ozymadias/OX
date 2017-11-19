@@ -1,4 +1,4 @@
-package endgame;
+package coregame;
 
 public enum Sign {
     O, X;

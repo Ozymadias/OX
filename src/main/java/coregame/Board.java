@@ -1,21 +1,20 @@
-import coregame.Observer;
-import coregame.Position;
-import endgame.Sign;
+package coregame;
 
-class Board implements Observer{
+
+public class Board {
     private Sign[][] board;
     private int numberOfRows;
     private int numberOfColumns;
     private Position currentPosition;
     private Sign currentSign;
 
-    Board(int numberOfRows, int numberOfColumns) {
+    public Board(int numberOfRows, int numberOfColumns) {
         this.board = new Sign[numberOfRows][numberOfColumns];
         this.numberOfColumns = numberOfColumns;
         this.numberOfRows = numberOfRows;
     }
 
-    void put(Sign sign, int rowNumber, int columnNumber) {
+    public void put(Sign sign, int rowNumber, int columnNumber) {
         board[rowNumber][columnNumber] = sign;
         currentPosition = new Position(rowNumber, columnNumber);
         currentSign = sign;
@@ -68,10 +67,5 @@ class Board implements Observer{
 
     public Sign getCurrentSign() {
         return currentSign;
-    }
-
-    @Override
-    public void inform() {
-        //put(move);
     }
 }

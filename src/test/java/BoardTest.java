@@ -1,4 +1,6 @@
-import endgame.Sign;
+import coregame.Board;
+import coregame.Judge;
+import coregame.Sign;
 import org.testng.annotations.Test;
 
 import java.util.Optional;

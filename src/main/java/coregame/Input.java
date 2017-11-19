@@ -1,3 +1,5 @@
+package coregame;
+
 import java.util.Scanner;
 
 public class Input {
