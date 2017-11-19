@@ -1,3 +1,5 @@
+package coregame;
+
 import coregame.Position;
 import coregame.Validator;
 import org.testng.annotations.Test;

@@ -1,5 +1,7 @@
 package coregame;
 
+import player.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -14,6 +16,7 @@ public class Game {
     private Board board;
     private Player current;
     private Map<Player, Sign> playerSign;
+    private Validator validator;
 
     public Game() {
         input = new Input();
@@ -32,8 +35,11 @@ public class Game {
 
         while (!winner.isPresent()) {
             output.print(board.toString());
-            output.print("podaj lokacje do umieszczenia znaku");
-            Position position = current.makeMove();
+            Position position;
+            do {
+                output.print("podaj lokacje do umieszczenia znaku");
+                position = current.makeMove();
+            }while (!validator.validate(position));
             board.put(playerSign.get(current), position);
             winner = judge.getWinner();
             changePlayer();
@@ -58,6 +64,7 @@ public class Game {
         int winningNb = input.getInt();
 
         board = new Board(nbOfRows, nbOfColumns);
+        validator = new Validator(nbOfRows, nbOfColumns);
         judge = new Judge(winningNb, board);
     }
 }

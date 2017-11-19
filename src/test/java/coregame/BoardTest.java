@@ -1,3 +1,5 @@
+package coregame;
+
 import coregame.Board;
 import coregame.Judge;
 import coregame.Sign;

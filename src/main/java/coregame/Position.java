@@ -1,5 +1,8 @@
 package coregame;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class Position {
     private final int rowNb;
     private final int columnNb;
