@@ -6,17 +6,20 @@ public class Board {
     private int numberOfColumns;
     private Position currentPosition;
     private Sign currentSign;
+    private int moveCounter;
 
     public Board(int numberOfRows, int numberOfColumns) {
         this.board = new Sign[numberOfRows][numberOfColumns];
         this.numberOfColumns = numberOfColumns;
         this.numberOfRows = numberOfRows;
+        this.moveCounter = numberOfColumns * numberOfRows;
     }
 
     public void put(Sign sign, int rowNumber, int columnNumber) {
         board[rowNumber][columnNumber] = sign;
         currentPosition = new Position(rowNumber, columnNumber);
         currentSign = sign;
+        moveCounter--;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class Board {
         board[position.getRowNb()][position.getColumnNb()] = sign;
         currentPosition = position;
         currentSign = sign;
+        moveCounter--;
     }
 
     public int getNumberOfRows() {
@@ -66,5 +70,13 @@ public class Board {
 
     public Sign getCurrentSign() {
         return currentSign;
+    }
+
+    public boolean isTaken(Position position) {
+        return board[position.getRowNb()][position.getColumnNb()] == null;
+    }
+
+    public boolean isFull() {
+        return moveCounter == 0;
     }
 }

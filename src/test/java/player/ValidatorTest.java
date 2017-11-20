@@ -8,13 +8,18 @@ import static org.testng.Assert.assertTrue;
 public class ValidatorTest {
     @Test
     public void shouldReturnFalseWhenGivenString() {
+        //Given
         Validator validator = new Validator();
-        assertFalse(validator.isValid("string"));
+        //When-Then
+        assertFalse(validator.isValid("any string, it matters not what is here"));
     }
 
     @Test
-    public void shouldRetrunTrueWhenGivenTwoIntegers() {
+    public void shouldReturnTrueWhenGivenTwoIntegers() {
+        //Given
         Validator validator = new Validator();
-        assertTrue(validator.isValid("5  4\n"));
+        String digitSpaceOrMoreDigit = "5 4\n";
+        //When-Then
+        assertTrue(validator.isValid(digitSpaceOrMoreDigit));
     }
 }
