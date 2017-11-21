@@ -3,7 +3,7 @@ package coregame;
 import java.util.Scanner;
 
 public class Input {
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     public int getInt() {
         return scanner.nextInt();
     }

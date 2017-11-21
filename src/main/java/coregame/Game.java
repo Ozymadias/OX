@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class Game {
+class Game {
 
-    private final Input input;
     private final Output output;
     private final Player first;
     private final Player second;
@@ -18,8 +17,7 @@ public class Game {
     private Map<Player, Sign> playerSign;
     private Validator validator;
 
-    public Game() {
-        input = new Input();
+    Game() {
         output = new Output();
         first = new LocalPlayer();
         second = new LocalPlayer();
@@ -29,7 +27,7 @@ public class Game {
         current = first;
     }
 
-    public void play() {
+    void play() {
         createBoard();
         Optional<Sign> winner = Optional.empty();
 
@@ -40,7 +38,7 @@ public class Game {
         }
 
         output.print(board.toString());
-        if(board.isFull())
+        if (board.isFull())
             output.print("remis");
         else
             output.print("zwyciezca jest " + winner.get());

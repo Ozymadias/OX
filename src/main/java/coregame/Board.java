@@ -8,14 +8,14 @@ public class Board {
     private Sign currentSign;
     private int moveCounter;
 
-    public Board(int numberOfRows, int numberOfColumns) {
+    Board(int numberOfRows, int numberOfColumns) {
         this.board = new Sign[numberOfRows][numberOfColumns];
         this.numberOfColumns = numberOfColumns;
         this.numberOfRows = numberOfRows;
         this.moveCounter = numberOfColumns * numberOfRows;
     }
 
-    public void put(Sign sign, int rowNumber, int columnNumber) {
+    void put(Sign sign, int rowNumber, int columnNumber) {
         board[rowNumber][columnNumber] = sign;
         currentPosition = new Position(rowNumber, columnNumber);
         currentSign = sign;
@@ -43,40 +43,40 @@ public class Board {
         return stringBuilder.toString();
     }
 
-    public void put(Sign sign, Position position) {
+    void put(Sign sign, Position position) {
         board[position.getRowNb()][position.getColumnNb()] = sign;
         currentPosition = position;
         currentSign = sign;
         moveCounter--;
     }
 
-    public int getNumberOfRows() {
+    int getNumberOfRows() {
         return numberOfRows;
     }
 
-    public int getNumberOfColumns() {
+    int getNumberOfColumns() {
         return numberOfColumns;
     }
 
-    public Position getCurrentPosition() {
+    Position getCurrentPosition() {
         return currentPosition;
     }
 
-    public Sign get(int i, int j) {
+    Sign get(int i, int j) {
         if (0 <= i && i < numberOfRows && 0 <= j && j < numberOfColumns)
             return board[i][j];
         return null;
     }
 
-    public Sign getCurrentSign() {
+    Sign getCurrentSign() {
         return currentSign;
     }
 
-    public boolean isTaken(Position position) {
+    boolean isTaken(Position position) {
         return board[position.getRowNb()][position.getColumnNb()] == null;
     }
 
-    public boolean isFull() {
+    boolean isFull() {
         return moveCounter == 0;
     }
 }

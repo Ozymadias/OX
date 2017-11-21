@@ -2,16 +2,17 @@ package coregame;
 
 import java.util.Optional;
 
-public class Judge {
+
+class Judge {
     private int winningNumber;
     private Board board;
 
-    public Judge(int winningNumber, Board board) {
+    Judge(int winningNumber, Board board) {
         this.winningNumber = winningNumber;
         this.board = board;
     }
 
-    public Optional<Sign> getWinner() {
+    Optional<Sign> getWinner() {
         if (board.getCurrentPosition() == null)
             return Optional.empty();
         Sign currentSign = board.getCurrentSign();

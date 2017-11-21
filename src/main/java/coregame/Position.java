@@ -12,11 +12,11 @@ public class Position {
         this.columnNb = columnNb;
     }
 
-    public int getColumnNb() {
+    int getColumnNb() {
         return columnNb;
     }
 
-    public int getRowNb() {
+    int getRowNb() {
         return rowNb;
     }
 }

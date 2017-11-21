@@ -11,6 +11,28 @@ public class ValidatorTest {
     private Validator validator = new Validator(3, 3);
 
     @DataProvider
+    public static Object[][] negativeCoords() {
+        return new Object[][]{
+                {-4, 2},
+                {3, -7},
+                {-5, -1},
+                {-2, 0}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] greaterThanBoard() {
+        return new Object[][]{
+                {3, 3, 0, 3},
+                {4, 3, 5, 1},
+                {3, 4, 4, 2},
+                {3, 19, 7, 0},
+                {13, 13, 13, 14},
+                {3, 3, 7, 8}
+        };
+    }
+
+    @DataProvider
     public static Object[][] inside3x3Board() {
         return new Object[][]{
                 {3, 3, 0, 0},
@@ -25,9 +47,15 @@ public class ValidatorTest {
         };
     }
 
-    @Test
-    public void cantHaveNegativeCoords() {
-        assertFalse(validator.validate(new Position(-1, 2)));
+    @Test(dataProvider = "negativeCoords")
+    public void cantHaveNegativeCoords(int row, int col) {
+        assertFalse(validator.validate(new Position(row, col)));
+    }
+
+    @Test(dataProvider = "greaterThanBoard")
+    public void cantHaveCoordsGreaterThanBoardSize(int i, int j, int row, int col) {
+        Validator val = new Validator(i, j);
+        assertFalse(val.validate(new Position(row, col)));
     }
 
     @Test(dataProvider = "inside3x3Board")

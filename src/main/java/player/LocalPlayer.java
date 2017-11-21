@@ -7,18 +7,14 @@ import coregame.Position;
 public class LocalPlayer implements Player {
     private final Input input;
     private final Validator validator;
-    private final Parser parser;
     private Output output;
     private IntValidator intValidator;
-    private IntParser intParser;
 
     public LocalPlayer() {
         this.input = new Input();
         validator = new Validator();
-        parser = new Parser();
         output = new Output();
         intValidator = new IntValidator();
-        intParser = new IntParser();
     }
 
     @Override
@@ -29,7 +25,7 @@ public class LocalPlayer implements Player {
             output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
             move = input.getString();
         }
-        return parser.parse(move);
+        return Parser.parse(move);
     }
 
     @Override
@@ -45,6 +41,6 @@ public class LocalPlayer implements Player {
             output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
             winningNb = input.getString();
         }
-        return intParser.parse(winningNb);
+        return IntParser.parse(winningNb);
     }
 }
