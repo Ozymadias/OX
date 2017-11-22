@@ -10,8 +10,4 @@ public interface Player {
     int provideWinningNumber();
 
     String getName();
-
-    int getScore();
-
-    void addPoint(int i);
 }

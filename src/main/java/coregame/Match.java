@@ -7,6 +7,9 @@ public class Match {
     private final Input input;
     private final Output output;
     private NameValidator nameValidator;
+    private Scoring scoring = new Scoring();
+    private Player first;
+    private Player second;
 
     public Match() {
         input = new Input();
@@ -16,10 +19,16 @@ public class Match {
 
     void play() {
         output.print("Witaj w grze OX");
-        Player first = new LocalPlayer(getName("pierwszego"));
-        Player second = new LocalPlayer(getName("drugiego"));
+        first = new LocalPlayer(getName("pierwszego"));
+        second = new LocalPlayer(getName("drugiego"));
+        scoring.register(first);
+        scoring.register(second);
+
         Game game = new Game(first, second);
-        game.play();
+        GameResults gameResults = game.play();
+        scoring.update(first, gameResults.get(first));
+        scoring.update(second, gameResults.get(second));
+        printResults();
     }
 
     private String getName(String player) {
@@ -30,5 +39,13 @@ public class Match {
             name = input.getString();
         }
         return name;
+    }
+
+    private void printResults() {
+        output.print("wynik to: " + getScore(first) + " " + getScore(second));
+    }
+
+    private String getScore(Player player) {
+        return player.getName() + ":" + scoring.get(player);
     }
 }

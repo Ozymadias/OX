@@ -10,7 +10,6 @@ public class LocalPlayer implements Player {
     private final String name;
     private Output output;
     private IntValidator intValidator;
-    private int score;
 
     public LocalPlayer(String name) {
         this.input = new Input();
@@ -18,7 +17,6 @@ public class LocalPlayer implements Player {
         validator = new Validator();
         output = new Output();
         intValidator = new IntValidator();
-        score = 0;
     }
 
     @Override
@@ -50,14 +48,5 @@ public class LocalPlayer implements Player {
 
     public String getName() {
         return name;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    @Override
-    public void addPoint(int i) {
-        score += i;
     }
 }

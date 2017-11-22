@@ -22,7 +22,7 @@ class Game {
         output = new Output();
     }
 
-    void play() {
+    GameResults play() {
         playerSign = new HashMap<>();
         playerSign.put(first, Sign.X);
         playerSign.put(second, Sign.O);
@@ -40,21 +40,27 @@ class Game {
 
         changePlayer();
         output.print(board.toString());
+
+        GameResults gameResult = new GameResults();
         if (board.isFull()) {
             output.print("remis");
-            first.addPoint(1);
-            second.addPoint(1);
+            gameResult.put(first, Result.DRAW);
+            gameResult.put(second, Result.DRAW);
         } else {
             output.print("zwyciezca jest " + current.getName());
-            current.addPoint(3);
+            gameResult.put(current, Result.WIN);
+            gameResult.put(notCurrent(), Result.LOSS);
         }
-        printResults();
+        return gameResult;
+    }
+
+    private Player notCurrent() {
+        return current == first ? second : first;
     }
 
     private void makeMove() {
         output.print(board.toString());
         output.print("tura gracza: " + current.getName() + "(" + playerSign.get(current) + ")");
-        printResults();
         output.print("podaj wpolrzedne pola w ktorym chcesz umiescic swoj znak w formacie \"rzad odstep kolumna\"");
         Position position = current.makeMove();
         while (!isPossible(position)) {
@@ -62,14 +68,6 @@ class Game {
             position = current.makeMove();
         }
         board.put(playerSign.get(current), position);
-    }
-
-    private void printResults() {
-        output.print("wynik to: " + getScore(first) + " " + getScore(second));;
-    }
-
-    private String getScore(Player player) {
-        return player.getName() + "(" + playerSign.get(player) + "):" + player.getScore();
     }
 
     private boolean isPossible(Position position) {
