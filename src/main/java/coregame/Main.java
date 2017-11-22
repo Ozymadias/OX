@@ -2,7 +2,7 @@ package coregame;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game();
-        game.play();
+        Match match = new Match();
+        match.play();
     }
 }

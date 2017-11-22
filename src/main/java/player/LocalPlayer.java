@@ -7,14 +7,18 @@ import coregame.Position;
 public class LocalPlayer implements Player {
     private final Input input;
     private final Validator validator;
+    private final String name;
     private Output output;
     private IntValidator intValidator;
+    private int score;
 
-    public LocalPlayer() {
+    public LocalPlayer(String name) {
         this.input = new Input();
+        this.name = name;
         validator = new Validator();
         output = new Output();
         intValidator = new IntValidator();
+        score = 0;
     }
 
     @Override
@@ -42,5 +46,18 @@ public class LocalPlayer implements Player {
             winningNb = input.getString();
         }
         return IntParser.parse(winningNb);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public void addPoint(int i) {
+        score += i;
     }
 }

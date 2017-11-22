@@ -8,4 +8,10 @@ public interface Player {
     Position decideBoardSize();
 
     int provideWinningNumber();
+
+    String getName();
+
+    int getScore();
+
+    void addPoint(int i);
 }

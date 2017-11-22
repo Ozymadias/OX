@@ -7,28 +7,29 @@ import java.util.Map;
 import java.util.Optional;
 
 class Game {
-
     private final Output output;
-    private final Player first;
-    private final Player second;
+    private Player first;
+    private Player second;
     private Judge judge;
     private Board board;
     private Player current;
     private Map<Player, Sign> playerSign;
     private Validator validator;
 
-    Game() {
+    Game(Player first, Player second) {
+        this.first = first;
+        this.second = second;
         output = new Output();
-        first = new LocalPlayer();
-        second = new LocalPlayer();
+    }
+
+    void play() {
         playerSign = new HashMap<>();
         playerSign.put(first, Sign.X);
         playerSign.put(second, Sign.O);
         current = first;
-    }
 
-    void play() {
         createBoard();
+
         Optional<Sign> winner = Optional.empty();
 
         while (!winner.isPresent() && !board.isFull()) {
@@ -37,15 +38,23 @@ class Game {
             changePlayer();
         }
 
+        changePlayer();
         output.print(board.toString());
-        if (board.isFull())
+        if (board.isFull()) {
             output.print("remis");
-        else
-            output.print("zwyciezca jest " + winner.get());
+            first.addPoint(1);
+            second.addPoint(1);
+        } else {
+            output.print("zwyciezca jest " + current.getName());
+            current.addPoint(3);
+        }
+        printResults();
     }
 
     private void makeMove() {
         output.print(board.toString());
+        output.print("tura gracza: " + current.getName() + "(" + playerSign.get(current) + ")");
+        printResults();
         output.print("podaj wpolrzedne pola w ktorym chcesz umiescic swoj znak w formacie \"rzad odstep kolumna\"");
         Position position = current.makeMove();
         while (!isPossible(position)) {
@@ -53,6 +62,14 @@ class Game {
             position = current.makeMove();
         }
         board.put(playerSign.get(current), position);
+    }
+
+    private void printResults() {
+        output.print("wynik to: " + getScore(first) + " " + getScore(second));;
+    }
+
+    private String getScore(Player player) {
+        return player.getName() + "(" + playerSign.get(player) + "):" + player.getScore();
     }
 
     private boolean isPossible(Position position) {
@@ -64,8 +81,6 @@ class Game {
     }
 
     private void createBoard() {
-        output.print("Witaj w grze OX");
-
         output.print("podaj wymiary planszy w formacie \"rzedy odstep kolumny\"");
 
         Position size = first.decideBoardSize();
