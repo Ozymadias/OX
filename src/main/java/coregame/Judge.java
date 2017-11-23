@@ -13,12 +13,12 @@ class Judge {
     }
 
     Optional<Sign> getWinner() {
-        if (rowContainsOnlySameSigns() || columnContainsOnlySameSigns())
+        if (winInRow() || winInColumn() || winInDiagonal())
             return Optional.of(board.getCurrentSign());
         return Optional.empty();
     }
 
-    private boolean rowContainsOnlySameSigns() {
+    private boolean winInRow() {
         int occurrences = nextOccurrences(board.horizontalIterator())
                 + 1
                 + previousOccurrences(board.horizontalIterator());
@@ -26,7 +26,7 @@ class Judge {
         return occurrences >= winningNumber;
     }
 
-    private boolean columnContainsOnlySameSigns() {
+    private boolean winInColumn() {
         int occurrences = nextOccurrences(board.verticalIterator())
                 + 1
                 + previousOccurrences(board.verticalIterator());
@@ -34,8 +34,16 @@ class Judge {
         return occurrences >= winningNumber;
     }
 
+    private boolean winInDiagonal() {
+        int occurrences = nextOccurrences(board.diagonalIterator())
+                + 1
+                + previousOccurrences(board.diagonalIterator());
+
+        return occurrences >= winningNumber;
+    }
+
     private int previousOccurrences(MyIterator<Sign> it) {
-        int occurrences = -1;
+        int occurrences = 0;
         while (it.hasPrevious() && board.isCurrent(it.previous()))
             occurrences++;
 
@@ -43,7 +51,7 @@ class Judge {
     }
 
     private int nextOccurrences(MyIterator<Sign> it) {
-        int occurrences = -1;
+        int occurrences = 0;
         while (it.hasNext() && board.isCurrent(it.next()))
             occurrences++;
 

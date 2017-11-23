@@ -1,6 +1,5 @@
 package coregame;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Board {
@@ -65,6 +64,10 @@ public class Board {
         return moveCounter == 0;
     }
 
+    boolean isCurrent(Sign sign) {
+        return currentSign == sign;
+    }
+
     MyIterator<Sign> horizontalIterator() {
         return new HorizontalIterator();
     }
@@ -73,8 +76,8 @@ public class Board {
         return new VerticalIterator();
     }
 
-    boolean isCurrent(Sign sign) {
-        return currentSign == sign;
+    MyIterator<Sign> diagonalIterator() {
+        return new DiagonalIterator();
     }
 
     private class HorizontalIterator implements MyIterator<Sign> {
@@ -88,30 +91,34 @@ public class Board {
 
         @Override
         public boolean hasNext() {
-            return col < Board.this.numberOfColumns;
+            return col < Board.this.numberOfColumns - 1;
         }
 
         @Override
         public Sign next() {
-            if (this.hasNext())
-                return Board.this.board[row][col++];
+            if (this.hasNext()) {
+                col++;
+                return Board.this.board[row][col];
+            }
             throw new NoSuchElementException();
         }
 
         @Override
         public boolean hasPrevious() {
-            return col >= 0;
+            return col > 0;
         }
 
         @Override
         public Sign previous() {
-            if (this.hasNext())
-                return Board.this.board[row][col--];
+            if (this.hasPrevious()) {
+                col--;
+                return Board.this.board[row][col];
+            }
             throw new NoSuchElementException();
         }
     }
 
-    private class VerticalIterator implements Iterator<Sign>, MyIterator<Sign> {
+    private class VerticalIterator implements MyIterator<Sign> {
         private int row;
         private int col;
 
@@ -122,25 +129,69 @@ public class Board {
 
         @Override
         public boolean hasNext() {
-            return row < Board.this.numberOfRows;
+            return row < Board.this.numberOfRows - 1;
         }
 
         @Override
         public Sign next() {
-            if (this.hasNext())
-                return Board.this.board[row++][col];
+            if (this.hasNext()) {
+                row++;
+                return Board.this.board[row][col];
+            }
             throw new NoSuchElementException();
         }
 
         @Override
         public boolean hasPrevious() {
-            return row >= 0;
+            return row > 0;
         }
 
         @Override
         public Sign previous() {
-            if (this.hasPrevious())
-                return Board.this.board[row--][col];
+            if (this.hasPrevious()) {
+                row--;
+                return Board.this.board[row][col];
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
+    private class DiagonalIterator implements MyIterator<Sign> {
+        private int row;
+        private int col;
+
+        DiagonalIterator() {
+            this.row = Board.this.currentPosition.getRowNb();
+            this.col = Board.this.currentPosition.getColumnNb();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return row < Board.this.numberOfRows - 1 && col < Board.this.numberOfColumns - 1;
+        }
+
+        @Override
+        public Sign next() {
+            if (this.hasNext()) {
+                row++;
+                col++;
+                return Board.this.board[row][col];
+            }
+            throw new NoSuchElementException();
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return row > 0 && col > 0;
+        }
+
+        @Override
+        public Sign previous() {
+            if (this.hasPrevious()) {
+                row--;
+                col--;
+                return Board.this.board[row][col];
+            }
             throw new NoSuchElementException();
         }
     }

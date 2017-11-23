@@ -46,6 +46,19 @@ public class BoardTest {
     }
 
     @Test
+    public void ifBoardHasDiagonalWithSameSignsThisSignShouldWin() {
+        //Given
+        Board board = new Board(3, 3);
+        Judge judge = new Judge(3, board);
+        //When
+        for (int i = 0; i < 3; i++)
+            board.put(Sign.X, i, i);
+        Optional<Sign> winner = judge.getWinner();
+        //Then
+        assertEquals(winner, Optional.of(Sign.X));
+    }
+
+    @Test
     public void ifTwoSignsWinsGameTwoSignsInSameRowShouldWin() {
         //Given
         Board board = new Board(3, 3);
