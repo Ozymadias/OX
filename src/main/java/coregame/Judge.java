@@ -16,9 +16,9 @@ class Judge {
         if (board.getCurrentPosition() == null)
             return Optional.empty();
         Sign currentSign = board.getCurrentSign();
-        if (checkIfRowContainsOnlySameSigns(board.getCurrentPosition().getRowNb()))
+        if (checkIfRowContainsOnlySameSigns2())
             return Optional.of(currentSign);
-        if (checkIfColumnContainsOnlySameSigns(board.getCurrentPosition().getColumnNb()))
+        if (checkIfColumnContainsOnlySameSigns2())
             return Optional.of(currentSign);
         return Optional.empty();
     }
@@ -43,23 +43,32 @@ class Judge {
         return numberOfOccurrences >= winningNumber;
     }
 
-    private boolean checkIfRowContainsOnlySameSigns(int rowNumber) {
-        int numberOfOccurrences = 1;
+    private boolean checkIfRowContainsOnlySameSigns2() {
+        int numberOfOccurrences = -1;
         Sign sign = board.getCurrentSign();
-        int columnsNb = board.getNumberOfColumns();
-        int currentColumn = board.getCurrentPosition().getColumnNb();
+        MyIterator<Sign> it = board.horizontalIterator();
 
-        for (int j = currentColumn - 1; j >= 0; j--) {
-            if (board.get(rowNumber, j) == sign)
-                numberOfOccurrences++;
-            else
-                break;
+        while (it.hasNext() && sign == it.next()) {
+            numberOfOccurrences++;
         }
-        for (int j = currentColumn + 1; j < columnsNb; j++) {
-            if (board.get(rowNumber, j) == sign)
-                numberOfOccurrences++;
-            else
-                break;
+        it = board.horizontalIterator();
+        while (it.hasPrevious() && sign == it.previous()) {
+            numberOfOccurrences++;
+        }
+        return numberOfOccurrences >= winningNumber;
+    }
+
+    private boolean checkIfColumnContainsOnlySameSigns2() {
+        int numberOfOccurrences = -1;
+        Sign sign = board.getCurrentSign();
+        MyIterator<Sign> it = board.verticalIterator();
+
+        while (it.hasNext() && sign == it.next()) {
+            numberOfOccurrences++;
+        }
+        it = board.horizontalIterator();
+        while (it.hasPrevious() && sign == it.previous()) {
+            numberOfOccurrences++;
         }
         return numberOfOccurrences >= winningNumber;
     }
