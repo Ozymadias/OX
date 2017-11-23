@@ -26,8 +26,7 @@ public class Match {
 
         Game game = new Game(first, second);
         GameResults gameResults = game.play();
-        scoring.update(first, gameResults.get(first));
-        scoring.update(second, gameResults.get(second));
+        scoring.update(gameResults);
         printResults();
     }
 

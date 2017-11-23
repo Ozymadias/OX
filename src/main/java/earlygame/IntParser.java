@@ -1,4 +1,4 @@
-package player;
+package earlygame;
 
 class IntParser {
     static int parse(String winningNb) {

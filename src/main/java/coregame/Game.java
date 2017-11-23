@@ -1,5 +1,6 @@
 package coregame;
 
+import earlygame.Host;
 import player.*;
 
 import java.util.HashMap;
@@ -81,23 +82,24 @@ class Game {
     private void createBoard() {
         output.print("podaj wymiary planszy w formacie \"rzedy odstep kolumny\"");
 
-        Position size = first.decideBoardSize();
+        Host host = new Host();
+        Position size = host.decideBoardSize();
         int nbOfRows = size.getRowNb();
         int nbOfColumns = size.getColumnNb();
 
         while (nbOfColumns == 0 || nbOfRows == 0) {
             output.print("zero nie jest dopuszczalne jako wymiar, sprobuj jeszcze raz");
-            size = first.decideBoardSize();
+            size = host.decideBoardSize();
             nbOfRows = size.getRowNb();
             nbOfColumns = size.getColumnNb();
         }
 
         output.print("podaj liczbe znakow niezbedna do wygranej");
-        int winningNb = current.provideWinningNumber();
+        int winningNb = host.provideWinningNumber();
 
         while ((winningNb > nbOfRows && winningNb > nbOfColumns) || winningNb == 0) {
             output.print("liczba niezbedna do wygranej musi byc mniejsza niz jeden z wymiarow planszy oraz wieksza od zera, sprobuj jeszcze raz");
-            winningNb = current.provideWinningNumber();
+            winningNb = host.provideWinningNumber();
         }
 
         board = new Board(nbOfRows, nbOfColumns);

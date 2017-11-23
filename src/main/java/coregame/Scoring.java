@@ -22,6 +22,14 @@ class Scoring {
     }
 
     int get(Player player) {
-        return playersScores.get(player);
+        return playersScores.getOrDefault(player, 0);
+    }
+
+    void update(GameResults gameResults) {
+        for (Player player:playersScores.keySet()) {
+            int previousScore = playersScores.getOrDefault(player, 0);
+            int newScore = scoring.get(gameResults.get(player));
+            playersScores.put(player, previousScore + newScore);
+        }
     }
 }

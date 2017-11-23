@@ -1,4 +1,4 @@
-package player;
+package earlygame;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

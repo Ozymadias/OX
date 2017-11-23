@@ -1,4 +1,4 @@
-package player;
+package earlygame;
 
 class IntValidator {
     boolean isValid(String winningNb) {
