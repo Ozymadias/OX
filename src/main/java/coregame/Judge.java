@@ -13,63 +13,40 @@ class Judge {
     }
 
     Optional<Sign> getWinner() {
-        if (board.getCurrentPosition() == null)
-            return Optional.empty();
-        Sign currentSign = board.getCurrentSign();
-        if (checkIfRowContainsOnlySameSigns2())
-            return Optional.of(currentSign);
-        if (checkIfColumnContainsOnlySameSigns2())
-            return Optional.of(currentSign);
+        if (rowContainsOnlySameSigns() || columnContainsOnlySameSigns())
+            return Optional.of(board.getCurrentSign());
         return Optional.empty();
     }
 
-    private boolean checkIfColumnContainsOnlySameSigns(int columnNumber) {
-        int numberOfOccurrences = 1;
-        Sign sign = board.getCurrentSign();
-        int rowsNb = board.getNumberOfRows();
-        int currentRow = board.getCurrentPosition().getRowNb();
+    private boolean rowContainsOnlySameSigns() {
+        int occurrences = nextOccurrences(board.horizontalIterator())
+                + 1
+                + previousOccurrences(board.horizontalIterator());
 
-        int i = currentRow - 1;
-        while (board.get(i, columnNumber) == sign) {
-            numberOfOccurrences++;
-            i--;
-        }
-        for (int j = currentRow + 1; j < rowsNb; j++) {
-            if (board.get(j, columnNumber) == sign)
-                numberOfOccurrences++;
-            else
-                break;
-        }
-        return numberOfOccurrences >= winningNumber;
+        return occurrences >= winningNumber;
     }
 
-    private boolean checkIfRowContainsOnlySameSigns2() {
-        int numberOfOccurrences = -1;
-        Sign sign = board.getCurrentSign();
-        MyIterator<Sign> it = board.horizontalIterator();
+    private boolean columnContainsOnlySameSigns() {
+        int occurrences = nextOccurrences(board.verticalIterator())
+                + 1
+                + previousOccurrences(board.verticalIterator());
 
-        while (it.hasNext() && sign == it.next()) {
-            numberOfOccurrences++;
-        }
-        it = board.horizontalIterator();
-        while (it.hasPrevious() && sign == it.previous()) {
-            numberOfOccurrences++;
-        }
-        return numberOfOccurrences >= winningNumber;
+        return occurrences >= winningNumber;
     }
 
-    private boolean checkIfColumnContainsOnlySameSigns2() {
-        int numberOfOccurrences = -1;
-        Sign sign = board.getCurrentSign();
-        MyIterator<Sign> it = board.verticalIterator();
+    private int previousOccurrences(MyIterator<Sign> it) {
+        int occurrences = -1;
+        while (it.hasPrevious() && board.isCurrent(it.previous()))
+            occurrences++;
 
-        while (it.hasNext() && sign == it.next()) {
-            numberOfOccurrences++;
-        }
-        it = board.horizontalIterator();
-        while (it.hasPrevious() && sign == it.previous()) {
-            numberOfOccurrences++;
-        }
-        return numberOfOccurrences >= winningNumber;
+        return occurrences;
+    }
+
+    private int nextOccurrences(MyIterator<Sign> it) {
+        int occurrences = -1;
+        while (it.hasNext() && board.isCurrent(it.next()))
+            occurrences++;
+
+        return occurrences;
     }
 }

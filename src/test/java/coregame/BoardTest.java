@@ -8,10 +8,11 @@ import static org.testng.Assert.assertEquals;
 
 public class BoardTest {
     @Test
-    public void newBoardHasNoWinner() {
+    public void boardWithOneMoveHasNoWinner() {
         //Given
         Board board = new Board(3, 3);
         Judge judge = new Judge(3, board);
+        board.put(Sign.O, 0, 0);
         //When
         Optional<Sign> winner = judge.getWinner();
         //Then

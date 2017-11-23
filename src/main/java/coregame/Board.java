@@ -53,24 +53,6 @@ public class Board {
         moveCounter--;
     }
 
-    int getNumberOfRows() {
-        return numberOfRows;
-    }
-
-    int getNumberOfColumns() {
-        return numberOfColumns;
-    }
-
-    Position getCurrentPosition() {
-        return currentPosition;
-    }
-
-    Sign get(int i, int j) {
-        if (0 <= i && i < numberOfRows && 0 <= j && j < numberOfColumns)
-            return board[i][j];
-        return null;
-    }
-
     Sign getCurrentSign() {
         return currentSign;
     }
@@ -91,6 +73,10 @@ public class Board {
         return new VerticalIterator();
     }
 
+    boolean isCurrent(Sign sign) {
+        return currentSign == sign;
+    }
+
     private class HorizontalIterator implements MyIterator<Sign> {
         private int row;
         private int col;
@@ -107,11 +93,8 @@ public class Board {
 
         @Override
         public Sign next() {
-            if (this.hasNext()) {
-                int currentCol = col;
-                col = col + 1;
-                return Board.this.board[row][currentCol];
-            }
+            if (this.hasNext())
+                return Board.this.board[row][col++];
             throw new NoSuchElementException();
         }
 
@@ -122,11 +105,8 @@ public class Board {
 
         @Override
         public Sign previous() {
-            if (this.hasNext()) {
-                int currentCol = col;
-                col = col - 1;
-                return Board.this.board[row][currentCol];
-            }
+            if (this.hasNext())
+                return Board.this.board[row][col--];
             throw new NoSuchElementException();
         }
     }
@@ -142,27 +122,26 @@ public class Board {
 
         @Override
         public boolean hasNext() {
-            return col < Board.this.numberOfColumns;
+            return row < Board.this.numberOfRows;
         }
 
         @Override
         public Sign next() {
-            if (this.hasNext()) {
-                int currentCol = col;
-                col = col + 1;
-                return Board.this.board[row][currentCol];
-            }
+            if (this.hasNext())
+                return Board.this.board[row++][col];
             throw new NoSuchElementException();
         }
 
         @Override
         public boolean hasPrevious() {
-            return false;
+            return row >= 0;
         }
 
         @Override
         public Sign previous() {
-            return null;
+            if (this.hasPrevious())
+                return Board.this.board[row--][col];
+            throw new NoSuchElementException();
         }
     }
 }
