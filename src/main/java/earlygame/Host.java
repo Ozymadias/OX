@@ -30,4 +30,15 @@ public class Host {
         }
         return IntParser.parse(winningNb);
     }
+
+    public int decideNumberOfGames() {
+        output.print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc te rozgrywke");
+        String nbOfGames;
+        nbOfGames = input.getString();
+        while (!intValidator.isValid(nbOfGames)) {
+            output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
+            nbOfGames = input.getString();
+        }
+        return IntParser.parse(nbOfGames);
+    }
 }

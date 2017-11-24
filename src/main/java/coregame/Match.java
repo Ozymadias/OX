@@ -3,11 +3,16 @@ package coregame;
 import player.LocalPlayer;
 import player.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static coregame.Result.*;
+
 public class Match {
     private final Input input;
     private final Output output;
     private NameValidator nameValidator;
-    private Scoring scoring = new Scoring();
+    private Scoring scoring;
     private Player first;
     private Player second;
 
@@ -19,15 +24,30 @@ public class Match {
 
     void play() {
         output.print("Witaj w grze OX");
+        output.print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc te rozgrywke");
+        int numberOfGames = input.getInt();
+
+        Map<Result, Integer> resultToScoring = new HashMap<>();
+        output.print("Wybierz liczbe punktow za zwyciestow");
+        resultToScoring.put(WIN, input.getInt());
+        output.print("Wybierz liczbe punktow za remis");
+        resultToScoring.put(DRAW, input.getInt());
+        output.print("Wybierz liczbe punktow za przegrana");
+        resultToScoring.put(LOSS, input.getInt());
+        scoring = new Scoring(resultToScoring);
+
         first = new LocalPlayer(getName("pierwszego", "X"));
         second = new LocalPlayer(getName("drugiego", "O"));
         scoring.register(first);
         scoring.register(second);
 
-        Game game = new Game(first, second);
-        GameResults gameResults = game.play();
-        scoring.update(gameResults);
-        printResults();
+        for (int i = 0; i < numberOfGames; i++) {
+            Game game = new Game(first, second);
+            GameResults gameResults = game.play();
+            scoring.update(gameResults);
+            printResults();
+        }
+        output.print("Koniec gry");
     }
 
     private String getName(String player, String signString) {

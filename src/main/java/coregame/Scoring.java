@@ -8,13 +8,17 @@ import java.util.Map;
 import static coregame.Result.*;
 
 class Scoring {
-    Map<Result, Integer> scoring = new HashMap<>();
+    Map<Result, Integer> resultToScoring;
     Map<Player, Integer> playersScores = new HashMap<>();
 
-    public Scoring() {
-        scoring.put(WIN, 3);
-        scoring.put(DRAW, 1);
-        scoring.put(LOSS, 0);
+    Scoring(Map<Result, Integer> resultToScoring) {
+        this.resultToScoring = resultToScoring;
+    }
+
+    Scoring() {
+        resultToScoring.put(WIN, 3);
+        resultToScoring.put(DRAW, 1);
+        resultToScoring.put(LOSS, 0);
     }
 
     void register(Player player) {
@@ -23,7 +27,7 @@ class Scoring {
 
     void update(Player player, Result result) {
         int previousScore = playersScores.get(player);
-        playersScores.put(player, previousScore + scoring.get(result));
+        playersScores.put(player, previousScore + resultToScoring.get(result));
     }
 
     int get(Player player) {
@@ -33,7 +37,7 @@ class Scoring {
     void update(GameResults gameResults) {
         for (Player player:playersScores.keySet()) {
             int previousScore = playersScores.getOrDefault(player, 0);
-            int newScore = scoring.get(gameResults.get(player));
+            int newScore = resultToScoring.get(gameResults.get(player));
             playersScores.put(player, previousScore + newScore);
         }
     }
