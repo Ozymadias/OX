@@ -1,6 +1,5 @@
 package coregame;
 
-import com.google.common.collect.ImmutableMap;
 import player.Player;
 
 import java.util.HashMap;
@@ -9,8 +8,14 @@ import java.util.Map;
 import static coregame.Result.*;
 
 class Scoring {
-    Map<Result, Integer> scoring = ImmutableMap.of(WIN, 3, DRAW, 1, LOSS, 0);
+    Map<Result, Integer> scoring = new HashMap<>();
     Map<Player, Integer> playersScores = new HashMap<>();
+
+    public Scoring() {
+        scoring.put(WIN, 3);
+        scoring.put(DRAW, 1);
+        scoring.put(LOSS, 0);
+    }
 
     void register(Player player) {
         playersScores.put(player, 0);
