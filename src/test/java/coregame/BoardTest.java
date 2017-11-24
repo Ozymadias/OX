@@ -72,6 +72,19 @@ public class BoardTest {
     }
 
     @Test
+    public void ifBoardHasAntiDiagonalWithSameSignsThisSignShouldWin() {
+        //Given
+        Board board = new Board(3, 3);
+        Judge judge = new Judge(3, board);
+        //When
+        for (int i = 0; i < 3; i++)
+            board.put(Sign.X, i, 2 - i);
+        Optional<Sign> winner = judge.getWinner();
+        //Then
+        assertEquals(winner, Optional.of(Sign.X));
+    }
+
+    @Test
     public void shouldOverrideToString() {
         //Given
         Board board = new Board(3, 3);

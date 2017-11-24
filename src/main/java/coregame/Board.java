@@ -80,6 +80,10 @@ public class Board {
         return new DiagonalIterator();
     }
 
+    MyIterator<Sign> antiDiagonalIterator() {
+        return new AntiDiagonalIterator();
+    }
+
     private class HorizontalIterator implements MyIterator<Sign> {
         private int row;
         private int col;
@@ -189,6 +193,46 @@ public class Board {
         public Sign previous() {
             if (this.hasPrevious()) {
                 row--;
+                col--;
+                return Board.this.board[row][col];
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
+    private class AntiDiagonalIterator implements MyIterator<Sign> {
+        private int row;
+        private int col;
+
+        AntiDiagonalIterator() {
+            this.row = Board.this.currentPosition.getRowNb();
+            this.col = Board.this.currentPosition.getColumnNb();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return row > 0 && col < Board.this.numberOfColumns - 1;
+        }
+
+        @Override
+        public Sign next() {
+            if (this.hasNext()) {
+                row--;
+                col++;
+                return Board.this.board[row][col];
+            }
+            throw new NoSuchElementException();
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return row < Board.this.numberOfRows - 1 && col > 0;
+        }
+
+        @Override
+        public Sign previous() {
+            if (this.hasPrevious()) {
+                row++;
                 col--;
                 return Board.this.board[row][col];
             }

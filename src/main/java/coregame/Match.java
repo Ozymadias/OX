@@ -19,8 +19,8 @@ public class Match {
 
     void play() {
         output.print("Witaj w grze OX");
-        first = new LocalPlayer(getName("pierwszego"));
-        second = new LocalPlayer(getName("drugiego"));
+        first = new LocalPlayer(getName("pierwszego", "X"));
+        second = new LocalPlayer(getName("drugiego", "O"));
         scoring.register(first);
         scoring.register(second);
 
@@ -30,8 +30,8 @@ public class Match {
         printResults();
     }
 
-    private String getName(String player) {
-        output.print("Podaj imie " + player + " gracza");
+    private String getName(String player, String signString) {
+        output.print("Podaj imie " + player + " gracza ktory bedzie gral znakiem " + signString);
         String name = input.getString();
         while (!nameValidator.validate(name)) {
             output.print("Imie moze skladac sie jedynie z liter, sprobuj jeszcze raz");

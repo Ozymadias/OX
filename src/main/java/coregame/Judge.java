@@ -13,7 +13,7 @@ class Judge {
     }
 
     Optional<Sign> getWinner() {
-        if (winInRow() || winInColumn() || winInDiagonal())
+        if (winInRow() || winInColumn() || winInDiagonal() || winInAntiDiagonal())
             return Optional.of(board.getCurrentSign());
         return Optional.empty();
     }
@@ -38,6 +38,14 @@ class Judge {
         int occurrences = nextOccurrences(board.diagonalIterator())
                 + 1
                 + previousOccurrences(board.diagonalIterator());
+
+        return occurrences >= winningNumber;
+    }
+
+    private boolean winInAntiDiagonal() {
+        int occurrences = nextOccurrences(board.antiDiagonalIterator())
+                + 1
+                + previousOccurrences(board.antiDiagonalIterator());
 
         return occurrences >= winningNumber;
     }
