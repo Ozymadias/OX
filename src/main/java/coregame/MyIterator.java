@@ -9,4 +9,6 @@ interface MyIterator<T> {
     boolean hasPrevious();
 
     T previous();
+
+    void reset();
 }

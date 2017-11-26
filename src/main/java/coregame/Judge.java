@@ -1,5 +1,6 @@
 package coregame;
 
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -13,39 +14,18 @@ class Judge {
     }
 
     Optional<Sign> getWinner() {
-        if (winInRow() || winInColumn() || winInDiagonal() || winInAntiDiagonal())
-            return Optional.of(board.getCurrentSign());
+        Collection<MyIterator<Sign>> iterators = board.createIterators();
+        for (MyIterator<Sign> iterator : iterators)
+            if (win(iterator))
+                return Optional.of(board.getCurrentSign());
+
         return Optional.empty();
     }
 
-    private boolean winInRow() {
-        int occurrences = nextOccurrences(board.horizontalIterator())
-                + 1
-                + previousOccurrences(board.horizontalIterator());
-
-        return occurrences >= winningNumber;
-    }
-
-    private boolean winInColumn() {
-        int occurrences = nextOccurrences(board.verticalIterator())
-                + 1
-                + previousOccurrences(board.verticalIterator());
-
-        return occurrences >= winningNumber;
-    }
-
-    private boolean winInDiagonal() {
-        int occurrences = nextOccurrences(board.diagonalIterator())
-                + 1
-                + previousOccurrences(board.diagonalIterator());
-
-        return occurrences >= winningNumber;
-    }
-
-    private boolean winInAntiDiagonal() {
-        int occurrences = nextOccurrences(board.antiDiagonalIterator())
-                + 1
-                + previousOccurrences(board.antiDiagonalIterator());
+    private boolean win(MyIterator<Sign> iterator) {
+        int occurrences = nextOccurrences(iterator) + 1;
+        iterator.reset();
+        occurrences += previousOccurrences(iterator);
 
         return occurrences >= winningNumber;
     }
