@@ -8,7 +8,7 @@ import java.util.Map;
 import static coregame.Result.*;
 
 class Scoring {
-    Map<Result, Integer> resultToScoring;
+    Map<Result, Integer> resultToScoring = new HashMap<>();
     Map<Player, Integer> playersScores = new HashMap<>();
 
     Scoring(Map<Result, Integer> resultToScoring) {
