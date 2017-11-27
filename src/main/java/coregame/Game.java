@@ -1,5 +1,6 @@
 package coregame;
 
+import earlygame.Coordinates;
 import earlygame.Host;
 import player.*;
 
@@ -80,19 +81,12 @@ class Game {
     }
 
     private void createBoard() {
-        output.print("podaj wymiary planszy w formacie \"rzedy odstep kolumny\"");
+        output.print("podaj wymiary planszy w formacie \"rzedy odstep kolumny\" gdzie rzad i kolumna to liczby naturane wieksze od zera rozpoczynajace sie od cyfry roznej od zera");
 
         Host host = new Host();
-        Position size = host.decideBoardSize();
-        int nbOfRows = size.getRowNb();
-        int nbOfColumns = size.getColumnNb();
-
-        while (nbOfColumns == 0 || nbOfRows == 0) {
-            output.print("zero nie jest dopuszczalne jako wymiar, sprobuj jeszcze raz");
-            size = host.decideBoardSize();
-            nbOfRows = size.getRowNb();
-            nbOfColumns = size.getColumnNb();
-        }
+        Coordinates size = host.decideBoardSize();
+        int nbOfRows = size.getNumberOfRows();
+        int nbOfColumns = size.getNumberOfColumns();
 
         output.print("podaj liczbe znakow niezbedna do wygranej");
         int winningNb = host.provideWinningNumber();

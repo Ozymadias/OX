@@ -1,5 +1,7 @@
 package coregame;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 public class Board {
@@ -15,6 +17,15 @@ public class Board {
         this.numberOfColumns = numberOfColumns;
         this.numberOfRows = numberOfRows;
         this.moveCounter = numberOfColumns * numberOfRows;
+    }
+
+    Collection<MyIterator<Sign>> createIterators() {
+        Collection<MyIterator<Sign>> iterators = new HashSet<>();
+        iterators.add(new HorizontalIterator());
+        iterators.add(new VerticalIterator());
+        iterators.add(new DiagonalIterator());
+        iterators.add(new AntiDiagonalIterator());
+        return iterators;
     }
 
     void put(Sign sign, int rowNumber, int columnNumber) {
@@ -68,30 +79,24 @@ public class Board {
         return currentSign == sign;
     }
 
-    MyIterator<Sign> horizontalIterator() {
-        return new HorizontalIterator();
-    }
+    private abstract class AbstractIterator implements MyIterator<Sign> {
+        int row;
+        int col;
 
-    MyIterator<Sign> verticalIterator() {
-        return new VerticalIterator();
-    }
-
-    MyIterator<Sign> diagonalIterator() {
-        return new DiagonalIterator();
-    }
-
-    MyIterator<Sign> antiDiagonalIterator() {
-        return new AntiDiagonalIterator();
-    }
-
-    private class HorizontalIterator implements MyIterator<Sign> {
-        private int row;
-        private int col;
-
-        HorizontalIterator() {
+        AbstractIterator() {
             this.row = Board.this.currentPosition.getRowNb();
             this.col = Board.this.currentPosition.getColumnNb();
         }
+
+
+        @Override
+        public void reset() {
+            this.row = Board.this.currentPosition.getRowNb();
+            this.col = Board.this.currentPosition.getColumnNb();
+        }
+    }
+
+    private class HorizontalIterator extends AbstractIterator {
 
         @Override
         public boolean hasNext() {
@@ -120,17 +125,15 @@ public class Board {
             }
             throw new NoSuchElementException();
         }
-    }
 
-    private class VerticalIterator implements MyIterator<Sign> {
-        private int row;
-        private int col;
-
-        VerticalIterator() {
+        @Override
+        public void reset() {
             this.row = Board.this.currentPosition.getRowNb();
             this.col = Board.this.currentPosition.getColumnNb();
         }
+    }
 
+    private class VerticalIterator extends AbstractIterator {
         @Override
         public boolean hasNext() {
             return row < Board.this.numberOfRows - 1;
@@ -160,15 +163,7 @@ public class Board {
         }
     }
 
-    private class DiagonalIterator implements MyIterator<Sign> {
-        private int row;
-        private int col;
-
-        DiagonalIterator() {
-            this.row = Board.this.currentPosition.getRowNb();
-            this.col = Board.this.currentPosition.getColumnNb();
-        }
-
+    private class DiagonalIterator extends AbstractIterator {
         @Override
         public boolean hasNext() {
             return row < Board.this.numberOfRows - 1 && col < Board.this.numberOfColumns - 1;
@@ -200,15 +195,7 @@ public class Board {
         }
     }
 
-    private class AntiDiagonalIterator implements MyIterator<Sign> {
-        private int row;
-        private int col;
-
-        AntiDiagonalIterator() {
-            this.row = Board.this.currentPosition.getRowNb();
-            this.col = Board.this.currentPosition.getColumnNb();
-        }
-
+    private class AntiDiagonalIterator extends AbstractIterator {
         @Override
         public boolean hasNext() {
             return row > 0 && col < Board.this.numberOfColumns - 1;
