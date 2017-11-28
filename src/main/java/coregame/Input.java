@@ -17,6 +17,9 @@ public class Input {
     }
 
     public String getString() {
-        return scanner.nextLine();
+        String s = scanner.nextLine();
+        if (EndValidator.isGameOver(s))
+            System.exit(0);
+        return s;
     }
 }
