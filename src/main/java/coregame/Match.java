@@ -13,6 +13,8 @@ public class Match {
     private final Output output;
     private NameValidator nameValidator;
     private Scoring scoring;
+    private LocalPlayer first;
+    private LocalPlayer second;
 
     public Match() {
         input = new Input();
@@ -22,22 +24,16 @@ public class Match {
 
     void play() {
         output.welcome();
+
+        output.decideOutputType();
+        output.changeState(input.getInt());
+
         output.decideNumberOfGamesInMatch();
         int numberOfGames = input.getInt();
 
-        Map<Result, Integer> resultToScoring = new HashMap<>();
-        output.chooseScoreForWin();
-        resultToScoring.put(WIN, input.getInt());
-        output.chooseScoreForDraw();
-        resultToScoring.put(DRAW, input.getInt());
-        output.chooseScoreForLost();
-        resultToScoring.put(LOSS, input.getInt());
-        scoring = new Scoring(resultToScoring);
+        scoring = new Scoring(receiveScoring());
 
-        output.askFirstName();
-        Player first = new LocalPlayer(getName());
-        output.askSecondName();
-        Player second = new LocalPlayer(getName());
+        receiveNames();
         scoring.register(first);
         scoring.register(second);
 
@@ -47,8 +43,27 @@ public class Match {
             scoring.update(gameResults);
             output.printResults(getScore(first), getScore(second));
         }
+
         output.gameOver();
         output.printFinalResults(getScore(first), getScore(second));
+    }
+
+    private void receiveNames() {
+        output.askFirstName();
+        first = new LocalPlayer(getName());
+        output.askSecondName();
+        second = new LocalPlayer(getName());
+    }
+
+    private Map<Result, Integer> receiveScoring() {
+        Map<Result, Integer> resultToScoring = new HashMap<>();
+        output.chooseScoreForWin();
+        resultToScoring.put(WIN, input.getInt());
+        output.chooseScoreForDraw();
+        resultToScoring.put(DRAW, input.getInt());
+        output.chooseScoreForLost();
+        resultToScoring.put(LOSS, input.getInt());
+        return resultToScoring;
     }
 
     private String getName() {
