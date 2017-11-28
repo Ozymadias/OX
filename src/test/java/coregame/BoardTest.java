@@ -12,7 +12,7 @@ public class BoardTest {
         //Given
         Board board = new Board(3, 3);
         Judge judge = new Judge(3, board);
-        board.put(Sign.O, 0, 0);
+        board.put(Sign.O, new Position(0, 0));
         //When
         Optional<Sign> winner = judge.getWinner();
         //Then
@@ -26,7 +26,7 @@ public class BoardTest {
         Judge judge = new Judge(3, board);
         //When
         for (int i = 0; i < 3; i++)
-            board.put(Sign.X, 0, i);
+            board.put(Sign.X, new Position(0, i));
         Optional<Sign> winner = judge.getWinner();
         //Then
         assertEquals(winner, Optional.of(Sign.X));
@@ -39,7 +39,7 @@ public class BoardTest {
         Judge judge = new Judge(3, board);
         //When
         for (int i = 0; i < 3; i++)
-            board.put(Sign.X, i, 0);
+            board.put(Sign.X, new Position(i, 0));
         Optional<Sign> winner = judge.getWinner();
         //Then
         assertEquals(winner, Optional.of(Sign.X));
@@ -52,7 +52,7 @@ public class BoardTest {
         Judge judge = new Judge(3, board);
         //When
         for (int i = 0; i < 3; i++)
-            board.put(Sign.X, i, i);
+            board.put(Sign.X, new Position(i, i));
         Optional<Sign> winner = judge.getWinner();
         //Then
         assertEquals(winner, Optional.of(Sign.X));
@@ -65,7 +65,7 @@ public class BoardTest {
         Judge judge = new Judge(2, board);
         //When
         for (int i = 0; i < 2; i++)
-            board.put(Sign.X, 0, i);
+            board.put(Sign.X, new Position(0, i));
         Optional<Sign> winner = judge.getWinner();
         //Then
         assertEquals(winner, Optional.of(Sign.X));
@@ -78,7 +78,7 @@ public class BoardTest {
         Judge judge = new Judge(3, board);
         //When
         for (int i = 0; i < 3; i++)
-            board.put(Sign.X, i, 2 - i);
+            board.put(Sign.X, new Position(i, 2 - i));
         Optional<Sign> winner = judge.getWinner();
         //Then
         assertEquals(winner, Optional.of(Sign.X));

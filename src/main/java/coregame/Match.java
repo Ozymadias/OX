@@ -48,6 +48,7 @@ public class Match {
             output.printResults(getScore(first), getScore(second));
         }
         output.gameOver();
+        output.printFinalResults(getScore(first), getScore(second));
     }
 
     private String getName() {

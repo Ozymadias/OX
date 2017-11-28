@@ -2,7 +2,7 @@ package coregame;
 
 public class Output {
     private void print(String s) {
-        System.out.println(s);
+        System.err.println(s);
     }
 
     void askAboutPosition() {
@@ -46,11 +46,11 @@ public class Output {
     }
 
     void decideNumberOfGamesInMatch() {
-        print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc te rozgrywke");
+        print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc ten mecz");
     }
 
     void gameOver() {
-        print("Koniec gry");
+        print("\nKoniec gry");
     }
 
     void chooseScoreForWin() {
@@ -83,5 +83,9 @@ public class Output {
 
     void show(Board board) {
         print(board.toString());
+    }
+
+    void printFinalResults(String score1, String score2) {
+        print("wynik calego meczu to: " + score1 + " " + score2);
     }
 }

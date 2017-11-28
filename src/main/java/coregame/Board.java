@@ -29,13 +29,6 @@ public class Board {
         return iterators;
     }
 
-    void put(Sign sign, int rowNumber, int columnNumber) {
-        board[rowNumber][columnNumber] = sign;
-        currentPosition = new Position(rowNumber, columnNumber);
-        currentSign = sign;
-        moveCounter--;
-    }
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

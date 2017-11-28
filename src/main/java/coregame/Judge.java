@@ -23,7 +23,8 @@ class Judge {
     }
 
     private boolean win(MyIterator<Sign> iterator) {
-        int occurrences = nextOccurrences(iterator) + 1;
+        int currentOccurrence = 1;
+        int occurrences = nextOccurrences(iterator) + currentOccurrence;
         iterator.reset();
         occurrences += previousOccurrences(iterator);
 
