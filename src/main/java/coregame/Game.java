@@ -41,17 +41,17 @@ class Game {
         }
 
         changePlayer();
-        output.print(board.toString());
+        output.show(board);
 
         GameResults gameResult = new GameResults();
         if (winner.isPresent()) {
-            output.print("zwyciezca jest " + current.getName());
+            output.announceWin(current.getName());
             gameResult.put(current, Result.WIN);
             gameResult.put(notCurrent(), Result.LOSS);
             return gameResult;
         }
         if (board.isFull()) {
-            output.print("remis");
+            output.announceDraw();
             gameResult.put(first, Result.DRAW);
             gameResult.put(second, Result.DRAW);
         }
@@ -63,12 +63,12 @@ class Game {
     }
 
     private void makeMove() {
-        output.print(board.toString());
-        output.print("tura gracza: " + current.getName() + "(" + playerSign.get(current) + ")");
-        output.print("podaj wpolrzedne pola w ktorym chcesz umiescic swoj znak w formacie \"rzad odstep kolumna\"");
+        output.show(board);
+        output.turn(current.getName(), playerSign.get(current));
+        output.askAboutPosition();
         Position position = current.makeMove();
         while (!isPossible(position)) {
-            output.print("podane dane przekraczaja zakres planszy lub powielaja wczesniejszy ruch, sprobuj ponownie");
+            output.positionOutOfBoardOrRepeated();
             position = current.makeMove();
         }
         board.put(playerSign.get(current), position);
@@ -83,18 +83,18 @@ class Game {
     }
 
     private void createBoard() {
-        output.print("podaj wymiary planszy w formacie \"rzedy odstep kolumny\" gdzie rzad i kolumna to liczby naturane wieksze od zera rozpoczynajace sie od cyfry roznej od zera");
+        output.askAboutBoardSize();
 
         Host host = new Host();
         Coordinates size = host.decideBoardSize();
         int nbOfRows = size.getNumberOfRows();
         int nbOfColumns = size.getNumberOfColumns();
 
-        output.print("podaj liczbe znakow niezbedna do wygranej");
+        output.askWinningCondition();
         int winningNb = host.provideWinningNumber();
 
         while ((winningNb > nbOfRows && winningNb > nbOfColumns) || winningNb == 0) {
-            output.print("liczba niezbedna do wygranej musi byc mniejsza niz jeden z wymiarow planszy oraz wieksza od zera, sprobuj jeszcze raz");
+            output.wrongWinningCondition();
             winningNb = host.provideWinningNumber();
         }
 

@@ -10,7 +10,7 @@ public class Input {
         IntValidator intValidator = new IntValidator();
         while (!intValidator.isValid(intString)) {
             Output output = new Output();
-            output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
+            output.repeat();
             intString = this.getString();
         }
         return IntParser.parse(intString);

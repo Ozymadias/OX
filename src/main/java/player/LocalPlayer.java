@@ -22,7 +22,7 @@ public class LocalPlayer implements Player {
         String move;
         move = input.getString();
         while (!validator.isValid(move)) {
-            output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
+            output.repeat();
             move = input.getString();
         }
         return Parser.parse(move);

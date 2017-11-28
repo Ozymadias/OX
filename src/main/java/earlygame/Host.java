@@ -13,7 +13,7 @@ public class Host {
         String move;
         move = input.getString();
         while (!validator.isValid(move)) {
-            output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
+            output.repeat();
             move = input.getString();
         }
         return Parser.parse(move);
@@ -23,20 +23,9 @@ public class Host {
         String winningNb;
         winningNb = input.getString();
         while (!intValidator.isValid(winningNb)) {
-            output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
+            output.repeat();
             winningNb = input.getString();
         }
         return IntParser.parse(winningNb);
-    }
-
-    public int decideNumberOfGames() {
-        output.print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc te rozgrywke");
-        String nbOfGames;
-        nbOfGames = input.getString();
-        while (!intValidator.isValid(nbOfGames)) {
-            output.print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
-            nbOfGames = input.getString();
-        }
-        return IntParser.parse(nbOfGames);
     }
 }

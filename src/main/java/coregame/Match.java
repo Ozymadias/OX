@@ -13,8 +13,6 @@ public class Match {
     private final Output output;
     private NameValidator nameValidator;
     private Scoring scoring;
-    private Player first;
-    private Player second;
 
     public Match() {
         input = new Input();
@@ -23,21 +21,23 @@ public class Match {
     }
 
     void play() {
-        output.print("Witaj w grze OX");
-        output.print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc te rozgrywke");
+        output.welcome();
+        output.decideNumberOfGamesInMatch();
         int numberOfGames = input.getInt();
 
         Map<Result, Integer> resultToScoring = new HashMap<>();
-        output.print("Wybierz liczbe punktow za zwyciestow");
+        output.chooseScoreForWin();
         resultToScoring.put(WIN, input.getInt());
-        output.print("Wybierz liczbe punktow za remis");
+        output.chooseScoreForDraw();
         resultToScoring.put(DRAW, input.getInt());
-        output.print("Wybierz liczbe punktow za przegrana");
+        output.chooseScoreForLost();
         resultToScoring.put(LOSS, input.getInt());
         scoring = new Scoring(resultToScoring);
 
-        first = new LocalPlayer(getName("pierwszego", "X"));
-        second = new LocalPlayer(getName("drugiego", "O"));
+        output.askFirstName();
+        Player first = new LocalPlayer(getName());
+        output.askSecondName();
+        Player second = new LocalPlayer(getName());
         scoring.register(first);
         scoring.register(second);
 
@@ -45,23 +45,18 @@ public class Match {
             Game game = new Game(first, second);
             GameResults gameResults = game.play();
             scoring.update(gameResults);
-            printResults();
+            output.printResults(getScore(first), getScore(second));
         }
-        output.print("Koniec gry");
+        output.gameOver();
     }
 
-    private String getName(String player, String signString) {
-        output.print("Podaj imie " + player + " gracza ktory bedzie gral znakiem " + signString);
+    private String getName() {
         String name = input.getString();
         while (!nameValidator.validate(name)) {
-            output.print("Imie moze skladac sie jedynie z liter, sprobuj jeszcze raz");
+            output.wrongName();
             name = input.getString();
         }
         return name;
-    }
-
-    private void printResults() {
-        output.print("wynik to: " + getScore(first) + " " + getScore(second));
     }
 
     private String getScore(Player player) {
