@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public class Output {
     private static boolean isSystemOut = true;
-    Map<String,String> messages;
+    private static Map<String,String> messages;
 
-    public Output() {
+    static void provide(String language) {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new FileReader("/home/dominik/IdeaProjects/OX/src/main/java/resources/english.properties"));
+            scanner = new Scanner(new FileReader("/home/dominik/IdeaProjects/OX/src/main/java/resources/" + language + ".properties"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

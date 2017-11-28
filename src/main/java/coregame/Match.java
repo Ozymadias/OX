@@ -5,6 +5,8 @@ import player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
 
 import static coregame.Result.*;
 
@@ -23,7 +25,15 @@ public class Match {
     }
 
     void play() {
-        output.welcome();
+        //output.welcome();
+        String language = "";
+        Scanner s = new Scanner(System.in);
+        do {
+            System.out.println("Witaj by wybrac jezyk polski wybierz 1");
+            System.out.println("Welcome, in order to choose English language provide 2");
+            language = s.nextLine();
+        } while (language.equals("1\n") || language.equals("2\n"));
+        Output.provide("english");
 
         output.decideOutputType();
         output.changeState(input.getInt());
