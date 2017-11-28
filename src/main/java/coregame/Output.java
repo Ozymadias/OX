@@ -1,8 +1,16 @@
 package coregame;
 
+import java.util.ResourceBundle;
+
 public class Output {
+    private static boolean isSystemOut = true;
+    //ResourceBundle bundle = ResourceBundle.getBundle("src.main.java.resources.Bundle");
+
     private void print(String s) {
-        System.err.println(s);
+        if (isSystemOut)
+            System.out.println(s);
+        else
+            System.err.println(s);
     }
 
     void askAboutPosition() {
@@ -27,14 +35,6 @@ public class Output {
 
     void announceDraw() {
         print("remis");
-    }
-
-    void turn(String name, Sign sign) {
-        print("tura gracza: " + name + "(" + sign + ")");
-    }
-
-    void announceWin(String name) {
-        print("zwyciezca jest " + name);
     }
 
     public void repeat() {
@@ -77,6 +77,19 @@ public class Output {
         print("Imie moze skladac sie jedynie z liter, sprobuj jeszcze raz");
     }
 
+    void decideOutputType() {
+        print("by zmienic domyslne wyjscie na wyjscie bledow wybierz 1");
+    }
+
+
+    void announceWin(String name) {
+        print("zwyciezca jest " + name);
+    }
+
+    void turn(String name, Sign sign) {
+        print("tura gracza: " + name + "(" + sign + ")");
+    }
+
     void printResults(String score1, String score2) {
         print("wynik to: " + score1 + " " + score2);
     }
@@ -87,5 +100,9 @@ public class Output {
 
     void printFinalResults(String score1, String score2) {
         print("wynik calego meczu to: " + score1 + " " + score2);
+    }
+
+    void changeState(int i) {
+        isSystemOut = i != 1;
     }
 }
