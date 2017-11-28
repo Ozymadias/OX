@@ -13,7 +13,7 @@ public class Output {
     public Output() {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new FileReader("/home/dominik/IdeaProjects/OX/src/main/java/resources/Bundle.properties"));
+            scanner = new Scanner(new FileReader("/home/dominik/IdeaProjects/OX/src/main/java/resources/english.properties"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -23,8 +23,6 @@ public class Output {
             String[] columns = scanner.nextLine().split(" = ");
             messages.put(columns[0],columns[1]);
         }
-
-        System.out.println(messages);
     }
 
     private void print(String s) {
@@ -35,84 +33,84 @@ public class Output {
     }
 
     void askAboutPosition() {
-        print("podaj wpolrzedne pola w ktorym chcesz umiescic swoj znak w formacie \"rzad odstep kolumna\"");
+        print(messages.get("askAboutPosition"));
     }
 
     void positionOutOfBoardOrRepeated() {
-        print("podane dane przekraczaja zakres planszy lub powielaja wczesniejszy ruch, sprobuj ponownie");
+        print(messages.get("positionOutOfBoardOrRepeated"));
     }
 
     void askAboutBoardSize() {
-        print("podaj wymiary planszy w formacie \"rzedy odstep kolumny\" gdzie rzad i kolumna to liczby naturane wieksze od zera rozpoczynajace sie od cyfry roznej od zera");
+        print(messages.get("askAboutBoardSize"));
     }
 
     void askWinningCondition() {
-        print("podaj liczbe znakow niezbedna do wygranej");
+        print(messages.get("askWinningCondition"));
     }
 
     void wrongWinningCondition() {
-        print("liczba niezbedna do wygranej musi byc mniejsza niz jeden z wymiarow planszy oraz wieksza od zera, sprobuj jeszcze raz");
+        print(messages.get("wrongWinningCondition"));
     }
 
     void announceDraw() {
-        print("remis");
+        print(messages.get("announceDraw"));
     }
 
     public void repeat() {
-        print("podane dane nie sa w odpowiednim formacie, sprobuj jeszcze raz");
+        print(messages.get("repeat"));
     }
 
     void welcome() {
-        print("Witaj w grze OX");
+        print(messages.get("welcome"));
     }
 
     void decideNumberOfGamesInMatch() {
-        print("Wybierz liczbe po sobie nastepujacych gier w kolko i krzyzyk ktore beda tworzyc ten mecz");
+        print(messages.get("decideNumberOfGamesInMatch"));
     }
 
     void gameOver() {
-        print("\nKoniec gry");
+        print("\n" + messages.get("gameOver"));
     }
 
     void chooseScoreForWin() {
-        print("Wybierz liczbe punktow za zwyciestow");
+        print(messages.get("chooseScoreForWin"));
     }
 
     void chooseScoreForDraw() {
-        print("Wybierz liczbe punktow za remis");
+        print(messages.get("chooseScoreForDraw"));
     }
 
     void chooseScoreForLost() {
-        print("Wybierz liczbe punktow za przegrana");
+        print(messages.get("chooseScoreForLost"));
     }
 
     void askFirstName() {
-        print("Podaj imie pierwszego gracza ktory bedzie gral znakiem X");
+        print(messages.get("askFirstName"));
     }
 
     void askSecondName() {
-        print("Podaj imie drugiego gracza ktory bedzie gral znakiem O");
+        print(messages.get("askSecondName"));
     }
 
     void wrongName() {
-        print("Imie moze skladac sie jedynie z liter, sprobuj jeszcze raz");
+        print(messages.get("wrongName"));
     }
 
     void decideOutputType() {
-        print("by zmienic domyslne wyjscie na wyjscie bledow wybierz 1");
+        print(messages.get("decideOutputType"));
     }
 
 
     void announceWin(String name) {
-        print("zwyciezca jest " + name);
+        print(messages.get("announceWin") + name);
     }
 
     void turn(String name, Sign sign) {
-        print("tura gracza: " + name + "(" + sign + ")");
+        print(messages.get("turn") + name + "(" + sign + ")");
     }
 
     void printResults(String score1, String score2) {
-        print("wynik to: " + score1 + " " + score2);
+        print(messages.get("result") + score1 + " " + score2);
     }
 
     void show(Board board) {
@@ -120,7 +118,7 @@ public class Output {
     }
 
     void printFinalResults(String score1, String score2) {
-        print("wynik calego meczu to: " + score1 + " " + score2);
+        print(messages.get("finalResult") + score1 + " " + score2);
     }
 
     void changeState(int i) {
