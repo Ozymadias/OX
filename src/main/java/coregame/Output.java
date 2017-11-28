@@ -1,10 +1,31 @@
 package coregame;
 
-import java.util.ResourceBundle;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Output {
     private static boolean isSystemOut = true;
-    //ResourceBundle bundle = ResourceBundle.getBundle("src.main.java.resources.Bundle");
+    Map<String,String> messages;
+
+    public Output() {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new FileReader("/home/dominik/IdeaProjects/OX/src/main/java/resources/Bundle.properties"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        messages = new HashMap<>();
+        while (scanner.hasNextLine()) {
+            String[] columns = scanner.nextLine().split(" = ");
+            messages.put(columns[0],columns[1]);
+        }
+
+        System.out.println(messages);
+    }
 
     private void print(String s) {
         if (isSystemOut)
