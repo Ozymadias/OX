@@ -44,14 +44,16 @@ class Game {
         output.print(board.toString());
 
         GameResults gameResult = new GameResults();
+        if (winner.isPresent()) {
+            output.print("zwyciezca jest " + current.getName());
+            gameResult.put(current, Result.WIN);
+            gameResult.put(notCurrent(), Result.LOSS);
+            return gameResult;
+        }
         if (board.isFull()) {
             output.print("remis");
             gameResult.put(first, Result.DRAW);
             gameResult.put(second, Result.DRAW);
-        } else {
-            output.print("zwyciezca jest " + current.getName());
-            gameResult.put(current, Result.WIN);
-            gameResult.put(notCurrent(), Result.LOSS);
         }
         return gameResult;
     }
