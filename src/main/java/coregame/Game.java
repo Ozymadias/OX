@@ -66,12 +66,21 @@ class Game {
         output.show(board);
         output.turn(current.getName(), playerSign.get(current));
         output.askAboutPosition();
-        Position position = current.makeMove();
-        while (!isPossible(position)) {
+        Optional<Position> position = current.makeMove();
+        while (position.isPresent() && !isPossible(position.get())) {
             output.positionOutOfBoardOrRepeated();
             position = current.makeMove();
         }
-        board.put(playerSign.get(current), position);
+        if (!position.isPresent())
+            switchPlayers();
+        else
+            board.put(playerSign.get(current), position.get());
+    }
+
+    private void switchPlayers() {
+        Sign temp = playerSign.get(first);
+        playerSign.put(first, playerSign.get(second));
+        playerSign.put(second, temp);
     }
 
     private boolean isPossible(Position position) {

@@ -26,14 +26,17 @@ public class Match {
 
     void play() {
         //output.welcome();
-        String language = "";
+        String language;
         Scanner s = new Scanner(System.in);
         do {
             System.out.println("Witaj by wybrac jezyk polski wybierz 1");
             System.out.println("Welcome, in order to choose English language provide 2");
             language = s.nextLine();
         } while (language.equals("1\n") || language.equals("2\n"));
-        Output.provide("english");
+        if (language.equals("1\n"))
+            Output.provide("english");
+        else
+            Output.provide("polish");
 
         output.decideOutputType();
         output.changeState(input.getInt());

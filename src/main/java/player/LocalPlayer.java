@@ -4,6 +4,8 @@ import coregame.Input;
 import coregame.Output;
 import coregame.Position;
 
+import java.util.Optional;
+
 public class LocalPlayer implements Player {
     private final Input input;
     private final Validator validator;
@@ -18,14 +20,17 @@ public class LocalPlayer implements Player {
     }
 
     @Override
-    public Position makeMove() {
+    public Optional<Position> makeMove() {
         String move;
         move = input.getString();
-        while (!validator.isValid(move)) {
+        while (!validator.isValid(move) && !move.equals("switch")) {
             output.repeat();
             move = input.getString();
         }
-        return Parser.parse(move);
+        if (!move.equals("switch"))
+            return Optional.of(Parser.parse(move));
+        else
+            return Optional.empty();
     }
 
     public String getName() {
