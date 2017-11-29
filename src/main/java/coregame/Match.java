@@ -27,7 +27,7 @@ public class Match {
         String language;
         Scanner s = new Scanner(System.in);
         do {
-            System.out.println("Witaj by wybrac jezyk polski wybierz 1");
+            System.out.println("Witaj by wybrać język polski wybierz 1");
             System.out.println("Welcome, in order to choose English language provide 2");
             language = s.nextLine();
         } while (!language.equals("1") && !language.equals("2"));
