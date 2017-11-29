@@ -52,7 +52,7 @@ public class Match {
 
         for (int i = 0; i < numberOfGames; i++) {
             Game game = new Game(first, second);
-            GameResults gameResults = game.play();
+            GameResults gameResults = game.play(input);
             scoring.update(gameResults);
             output.printResults(getScore(first), getScore(second));
         }
@@ -63,9 +63,9 @@ public class Match {
 
     private void receiveNames() {
         output.askFirstName();
-        first = new LocalPlayer(getName());
+        first = new LocalPlayer(getName(), input);
         output.askSecondName();
-        second = new LocalPlayer(getName());
+        second = new LocalPlayer(getName(), input);
     }
 
     private Map<Result, Integer> receiveScoring() {

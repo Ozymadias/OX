@@ -12,8 +12,8 @@ public class LocalPlayer implements Player {
     private final String name;
     private Output output;
 
-    public LocalPlayer(String name) {
-        this.input = new Input();
+    public LocalPlayer(String name, Input input) {
+        this.input = input;
         this.name = name;
         validator = new Validator();
         output = new Output();

@@ -24,13 +24,13 @@ class Game {
         output = new Output();
     }
 
-    GameResults play() {
+    GameResults play(Input input) {
         playerSign = new HashMap<>();
         playerSign.put(first, Sign.X);
         playerSign.put(second, Sign.O);
         current = first;
 
-        createBoard();
+        createBoard(input);
 
         Optional<Sign> winner = Optional.empty();
 
@@ -78,9 +78,8 @@ class Game {
     }
 
     private void switchPlayers() {
-        Sign temp = playerSign.get(first);
-        playerSign.put(first, playerSign.get(second));
-        playerSign.put(second, temp);
+        playerSign.put(first, playerSign.get(first).change());
+        playerSign.put(second, playerSign.get(second).change());
     }
 
     private boolean isPossible(Position position) {
@@ -91,10 +90,10 @@ class Game {
         current = current == first ? second : first;
     }
 
-    private void createBoard() {
+    private void createBoard(Input input) {
         output.askAboutBoardSize();
 
-        Host host = new Host();
+        Host host = new Host(input);
         Coordinates size = host.decideBoardSize();
         int nbOfRows = size.getNumberOfRows();
         int nbOfColumns = size.getNumberOfColumns();

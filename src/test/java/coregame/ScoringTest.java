@@ -17,7 +17,8 @@ public class ScoringTest {
     @Test
     public void inDefaultCaseAfterOneWinPlayerGotThreePoints() {
         //Given
-        Player player = new LocalPlayer("name");
+        Input input = new Input();
+        Player player = new LocalPlayer("name", input);
         Scoring scoring = new Scoring();
         scoring.register(player);
 
@@ -33,7 +34,8 @@ public class ScoringTest {
     @Test
     public void afterOneWinPlayerGotChosenNumberPoints() {
         //Given
-        Player player = new LocalPlayer("name");
+        Input input = new Input();
+        Player player = new LocalPlayer("name", input);
 
         Map<Result, Integer> resultToScoring = new HashMap<>();
         int pointsForWin = 4;

@@ -4,10 +4,14 @@ import coregame.Input;
 import coregame.Output;
 
 public class Host {
-    private Input input = new Input();
+    private Input input;
     private Validator validator = new Validator();
     private Output output = new Output();
     private IntValidator intValidator = new IntValidator();
+
+    public Host(Input input) {
+        this.input = input;
+    }
 
     public Coordinates decideBoardSize() {
         String move;
