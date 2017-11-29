@@ -1,10 +1,10 @@
 package coregame;
 
-class Validator {
+class SizeValidator {
     private final int columns;
     private final int rows;
 
-    Validator(int rows, int columns) {
+    SizeValidator(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
     }

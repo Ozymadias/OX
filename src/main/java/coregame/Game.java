@@ -16,7 +16,7 @@ class Game {
     private Board board;
     private Player current;
     private Map<Player, Sign> playerSign;
-    private Validator validator;
+    private SizeValidator validator;
 
     Game(Player first, Player second) {
         this.first = first;
@@ -108,7 +108,7 @@ class Game {
         }
 
         board = new Board(nbOfRows, nbOfColumns);
-        validator = new Validator(nbOfRows, nbOfColumns);
+        validator = new SizeValidator(nbOfRows, nbOfColumns);
         judge = new Judge(winningNb, board);
     }
 }

@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ValidatorTest {
 
-    private Validator validator = new Validator(3, 3);
+    private SizeValidator validator = new SizeValidator(3, 3);
 
     @DataProvider
     public static Object[][] negativeCoords() {
@@ -54,7 +54,7 @@ public class ValidatorTest {
 
     @Test(dataProvider = "greaterThanBoard")
     public void cantHaveCoordsGreaterThanBoardSize(int i, int j, int row, int col) {
-        Validator val = new Validator(i, j);
+        SizeValidator val = new SizeValidator(i, j);
         assertFalse(val.validate(new Position(row, col)));
     }
 
