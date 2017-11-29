@@ -5,6 +5,7 @@ import player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static coregame.Result.*;
@@ -63,9 +64,15 @@ public class Match {
 
     private void receiveNames() {
         output.askFirstName();
-        first = new LocalPlayer(getName(), input);
-        output.askSecondName();
-        second = new LocalPlayer(getName(), input);
+        String firstName = getName();
+        first = new LocalPlayer(firstName, input);
+
+        String secondName = "";
+        while (secondName.equals("") || secondName.equals(firstName)) {
+            output.askSecondName();
+            secondName= getName();
+        }
+        second = new LocalPlayer(secondName, input);
     }
 
     private Map<Result, Integer> receiveScoring() {
