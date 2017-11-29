@@ -30,8 +30,8 @@ public class Match {
             System.out.println("Witaj by wybrac jezyk polski wybierz 1");
             System.out.println("Welcome, in order to choose English language provide 2");
             language = s.nextLine();
-        } while (language.equals("1\n") || language.equals("2\n"));
-        if (language.equals("1\n"))
+        } while (!language.equals("1") && !language.equals("2"));
+        if (language.equals("2"))
             Output.provide("english");
         else
             Output.provide("polish");
