@@ -25,11 +25,6 @@ class Scoring {
         playersScores.put(player, 0);
     }
 
-    void update(Player player, Result result) {
-        int previousScore = playersScores.get(player);
-        playersScores.put(player, previousScore + resultToScoring.get(result));
-    }
-
     int get(Player player) {
         return playersScores.getOrDefault(player, 0);
     }
