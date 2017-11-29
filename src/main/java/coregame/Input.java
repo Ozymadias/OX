@@ -18,7 +18,7 @@ public class Input {
 
     public String getString() {
         String s = scanner.nextLine();
-        if (EndValidator.isGameOver(s))
+        if (s.equals("Q"))
             System.exit(0);
         return s;
     }
