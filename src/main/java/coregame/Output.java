@@ -60,8 +60,8 @@ public class Output {
         print(messages.get("repeat"));
     }
 
-    void welcome() {
-        print(messages.get("welcome"));
+    void settings() {
+        print(messages.get("settings"));
     }
 
     void decideNumberOfGamesInMatch() {
@@ -121,7 +121,7 @@ public class Output {
         print(messages.get("finalResult") + score1 + " " + score2);
     }
 
-    void changeState(int i) {
+    static void changeState(int i) {
         isSystemOut = i != 1;
     }
 }

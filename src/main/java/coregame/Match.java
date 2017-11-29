@@ -5,7 +5,6 @@ import player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static coregame.Result.*;
@@ -25,7 +24,6 @@ public class Match {
     }
 
     void play() {
-        //output.welcome();
         String language;
         Scanner s = new Scanner(System.in);
         do {
@@ -37,6 +35,8 @@ public class Match {
             Output.provide("english");
         else
             Output.provide("polish");
+
+        output.settings();
 
         output.decideOutputType();
         output.changeState(input.getInt());

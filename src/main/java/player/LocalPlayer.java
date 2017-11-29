@@ -23,11 +23,11 @@ public class LocalPlayer implements Player {
     public Optional<Position> makeMove() {
         String move;
         move = input.getString();
-        while (!validator.isValid(move) && !move.equals("switch")) {
+        while (!validator.isValid(move) && !move.equals("S")) {
             output.repeat();
             move = input.getString();
         }
-        if (!move.equals("switch"))
+        if (!move.equals("S"))
             return Optional.of(Parser.parse(move));
         else
             return Optional.empty();
