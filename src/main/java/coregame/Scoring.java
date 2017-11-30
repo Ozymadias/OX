@@ -2,16 +2,17 @@ package coregame;
 
 import player.Player;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 import static coregame.Result.*;
 
 class Scoring {
-    private Map<Result, Integer> resultToScoring = new HashMap<>();
+    private EnumMap<Result, Integer> resultToScoring = new EnumMap<>(Result.class);
     private Map<Player, Integer> playersScores = new HashMap<>();
 
-    Scoring(Map<Result, Integer> resultToScoring) {
+    Scoring(EnumMap<Result, Integer> resultToScoring) {
         this.resultToScoring = resultToScoring;
     }
 

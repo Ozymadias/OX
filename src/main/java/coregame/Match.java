@@ -3,8 +3,7 @@ package coregame;
 import player.LocalPlayer;
 import player.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 import java.util.Scanner;
 
 import static coregame.Result.*;
@@ -39,7 +38,7 @@ public class Match {
         output.settings();
 
         output.decideOutputType();
-        output.changeState(input.getInt());
+        Output.changeState(input.getInt());
 
         output.decideNumberOfGamesInMatch();
         int numberOfGames = input.getInt();
@@ -74,8 +73,8 @@ public class Match {
         second = new LocalPlayer(secondName, input);
     }
 
-    private Map<Result, Integer> receiveScoring() {
-        Map<Result, Integer> resultToScoring = new HashMap<>();
+    private EnumMap<Result, Integer> receiveScoring() {
+        EnumMap<Result, Integer> resultToScoring = new EnumMap<>(Result.class);
         output.chooseScoreForWin();
         resultToScoring.put(WIN, input.getInt());
         output.chooseScoreForDraw();

@@ -5,12 +5,9 @@ import org.testng.annotations.Test;
 import player.LocalPlayer;
 import player.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
-import static coregame.Result.DRAW;
-import static coregame.Result.LOSS;
-import static coregame.Result.WIN;
+import static coregame.Result.*;
 
 public class ScoringTest {
 
@@ -37,7 +34,7 @@ public class ScoringTest {
         Input input = new Input();
         Player player = new LocalPlayer("name", input);
 
-        Map<Result, Integer> resultToScoring = new HashMap<>();
+        EnumMap<Result, Integer> resultToScoring = new EnumMap<>(Result.class);
         int pointsForWin = 4;
         resultToScoring.put(WIN, pointsForWin);
         resultToScoring.put(DRAW, 2);
