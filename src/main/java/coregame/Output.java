@@ -13,7 +13,7 @@ public class Output {
     static void provide(String language) {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new FileReader("/home/dominik/IdeaProjects/OX/src/main/java/resources/" + language + ".properties"));
+            scanner = new Scanner(new FileReader("./src/main/java/resources/" + language + ".properties"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -14,8 +14,7 @@ public class Host {
     }
 
     public Coordinates decideBoardSize() {
-        String move;
-        move = input.getString();
+        String move = input.getString();
         while (!validator.isValid(move)) {
             output.repeat();
             move = input.getString();
@@ -24,8 +23,7 @@ public class Host {
     }
 
     public int provideWinningNumber() {
-        String winningNb;
-        winningNb = input.getString();
+        String winningNb = input.getString();
         while (!intValidator.isValid(winningNb)) {
             output.repeat();
             winningNb = input.getString();
