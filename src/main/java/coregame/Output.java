@@ -1,27 +1,26 @@
 package coregame;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Output {
     private static boolean isSystemOut = true;
-    private static Map<String,String> messages;
+    private static Map<String, String> messages;
 
     static void provide(String language) {
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new FileReader("./src/main/java/resources/" + language + ".properties"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        String fileName = "./src/main/java/resources/" + language + ".properties";
         messages = new HashMap<>();
-        while (scanner.hasNextLine()) {
-            String[] columns = scanner.nextLine().split(" = ");
-            messages.put(columns[0],columns[1]);
+        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+            stream.forEach(line -> {
+                String[] columns = line.split(" = ");
+                messages.put(columns[0], columns[1]);
+            });
+        } catch (IOException e) {
+            throw new LanguageFileNotFoundException(language);
         }
     }
 
@@ -99,8 +98,7 @@ public class Output {
     void decideOutputType() {
         print(messages.get("decideOutputType"));
     }
-
-
+    
     void announceWin(String name) {
         print(messages.get("announceWin") + name);
     }
