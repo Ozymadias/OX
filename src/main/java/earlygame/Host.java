@@ -1,12 +1,12 @@
 package earlygame;
 
 import coregame.Input;
-import coregame.Output;
+import coregame.Messenger;
 
 public class Host {
     private Input input;
     private Validator validator = new Validator();
-    private Output output = new Output();
+    private Messenger messenger = new Messenger();
     private IntValidator intValidator = new IntValidator();
 
     public Host(Input input) {
@@ -16,7 +16,7 @@ public class Host {
     public Coordinates decideBoardSize() {
         String move = input.getString();
         while (!validator.isValid(move)) {
-            output.repeat();
+            messenger.repeat();
             move = input.getString();
         }
         return Parser.parse(move);
@@ -25,7 +25,7 @@ public class Host {
     public int provideWinningNumber() {
         String winningNb = input.getString();
         while (!intValidator.isValid(winningNb)) {
-            output.repeat();
+            messenger.repeat();
             winningNb = input.getString();
         }
         return IntParser.parse(winningNb);

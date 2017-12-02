@@ -4,7 +4,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import player.LocalPlayer;
 
+import java.io.PrintStream;
+
 import static coregame.Result.WIN;
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
 
 public class GameTest {
@@ -263,8 +266,9 @@ public class GameTest {
 
     @Test(dataProvider = "dummyGame")
     public void oneMoveGame(String[] inputString) {
+        Output.printStream = mock(PrintStream.class);
         Input input = new MockInput(inputString);
-        Output.provide("polish");
+        Messenger.provide("polish");
         LocalPlayer first = new LocalPlayer("first", input);
         LocalPlayer second = new LocalPlayer("second", input);
         Game game = new Game(first, second);
@@ -274,8 +278,9 @@ public class GameTest {
 
     @Test(dataProvider = "classicGamesX")
     public void classicGameX(String[] inputString) {
+        Output.printStream = mock(PrintStream.class);
         Input input = new MockInput(inputString);
-        Output.provide("polish");
+        Messenger.provide("polish");
         LocalPlayer first = new LocalPlayer("first", input);
         LocalPlayer second = new LocalPlayer("second", input);
         Game game = new Game(first, second);
@@ -285,8 +290,9 @@ public class GameTest {
 
     @Test(dataProvider = "classicGamesY")
     public void classicGameY(String[] inputString) {
+        Output.printStream = mock(PrintStream.class);
         Input input = new MockInput(inputString);
-        Output.provide("polish");
+        Messenger.provide("polish");
         LocalPlayer first = new LocalPlayer("first", input);
         LocalPlayer second = new LocalPlayer("second", input);
         Game game = new Game(first, second);

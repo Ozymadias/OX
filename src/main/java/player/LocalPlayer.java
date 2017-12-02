@@ -1,7 +1,7 @@
 package player;
 
 import coregame.Input;
-import coregame.Output;
+import coregame.Messenger;
 import coregame.Position;
 
 import java.util.Optional;
@@ -10,13 +10,13 @@ public class LocalPlayer implements Player {
     private final Input input;
     private final Validator validator;
     private final String name;
-    private Output output;
+    private Messenger messenger;
 
     public LocalPlayer(String name, Input input) {
         this.input = input;
         this.name = name;
         validator = new Validator();
-        output = new Output();
+        messenger = new Messenger();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LocalPlayer implements Player {
         String move;
         move = input.getString();
         while (!validator.isValid(move) && !move.equals("S")) {
-            output.repeat();
+            messenger.repeat();
             move = input.getString();
         }
         if (!move.equals("S"))

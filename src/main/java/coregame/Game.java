@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 class Game {
-    private final Output output;
+    private final Messenger messenger;
     private Player first;
     private Player second;
     private Judge judge;
@@ -21,7 +21,7 @@ class Game {
     Game(Player first, Player second) {
         this.first = first;
         this.second = second;
-        output = new Output();
+        messenger = new Messenger();
     }
 
     GameResults play(Input input) {
@@ -41,17 +41,17 @@ class Game {
         }
 
         changePlayer();
-        output.show(board);
+        messenger.show(board);
 
         GameResults gameResult = new GameResults();
         if (winner.isPresent()) {
-            output.announceWin(current.getName());
+            messenger.announceWin(current.getName());
             gameResult.put(current, Result.WIN);
             gameResult.put(notCurrent(), Result.LOSS);
             return gameResult;
         }
         if (board.isFull()) {
-            output.announceDraw();
+            messenger.announceDraw();
             gameResult.put(first, Result.DRAW);
             gameResult.put(second, Result.DRAW);
         }
@@ -63,12 +63,12 @@ class Game {
     }
 
     private void makeMove() {
-        output.show(board);
-        output.turn(current.getName(), playerSign.get(current));
-        output.askAboutPosition();
+        messenger.show(board);
+        messenger.turn(current.getName(), playerSign.get(current));
+        messenger.askAboutPosition();
         Optional<Position> position = current.makeMove();
         while (position.isPresent() && !isPossible(position.get())) {
-            output.positionOutOfBoardOrRepeated();
+            messenger.positionOutOfBoardOrRepeated();
             position = current.makeMove();
         }
         if (!position.isPresent())
@@ -91,18 +91,18 @@ class Game {
     }
 
     private void createBoard(Input input) {
-        output.askAboutBoardSize();
+        messenger.askAboutBoardSize();
 
         Host host = new Host(input);
         Coordinates size = host.decideBoardSize();
         int nbOfRows = size.getNumberOfRows();
         int nbOfColumns = size.getNumberOfColumns();
 
-        output.askWinningCondition();
+        messenger.askWinningCondition();
         int winningNb = host.provideWinningNumber();
 
         while ((winningNb > nbOfRows && winningNb > nbOfColumns) || winningNb == 0) {
-            output.wrongWinningCondition();
+            messenger.wrongWinningCondition();
             winningNb = host.provideWinningNumber();
         }
 

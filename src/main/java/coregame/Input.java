@@ -9,8 +9,8 @@ public class Input {
         intString = this.getString();
         IntValidator intValidator = new IntValidator();
         while (!intValidator.isValid(intString)) {
-            Output output = new Output();
-            output.repeat();
+            Messenger messenger = new Messenger();
+            messenger.repeat();
             intString = this.getString();
         }
         return IntParser.parse(intString);

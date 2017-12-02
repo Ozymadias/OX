@@ -10,7 +10,7 @@ import static coregame.Result.*;
 
 public class Match {
     private final Input input;
-    private final Output output;
+    private final Messenger messenger;
     private NameValidator nameValidator;
     private Scoring scoring;
     private LocalPlayer first;
@@ -18,7 +18,7 @@ public class Match {
 
     public Match() {
         input = new Input();
-        output = new Output();
+        messenger = new Messenger();
         nameValidator = new NameValidator();
     }
 
@@ -26,21 +26,18 @@ public class Match {
         String language;
         Scanner s = new Scanner(System.in);
         do {
-            System.out.println("Witaj by wybrać język polski wybierz 1");
-            System.out.println("Welcome, in order to choose English language provide 2");
+            messenger.chooseLanguage();
             language = s.nextLine();
         } while (!language.equals("1") && !language.equals("2"));
         if (language.equals("2"))
-            Output.provide("english");
+            Messenger.provide("english");
         else
-            Output.provide("polish");
+            Messenger.provide("polish");
 
-        output.settings();
+        messenger.settings();
 
-        output.decideOutputType();
-        Output.changeState(input.getInt());
 
-        output.decideNumberOfGamesInMatch();
+        messenger.decideNumberOfGamesInMatch();
         int numberOfGames = input.getInt();
 
         scoring = new Scoring(receiveScoring());
@@ -53,33 +50,33 @@ public class Match {
             Game game = new Game(first, second);
             GameResults gameResults = game.play(input);
             scoring.update(gameResults);
-            output.printResults(getScore(first), getScore(second));
+            messenger.printResults(getScore(first), getScore(second));
         }
 
-        output.gameOver();
-        output.printFinalResults(getScore(first), getScore(second));
+        messenger.gameOver();
+        messenger.printFinalResults(getScore(first), getScore(second));
     }
 
     private void receiveNames() {
-        output.askFirstName();
+        messenger.askFirstName();
         String firstName = getName();
         first = new LocalPlayer(firstName, input);
 
         String secondName = "";
         while (secondName.equals("") || secondName.equals(firstName)) {
-            output.askSecondName();
-            secondName= getName();
+            messenger.askSecondName();
+            secondName = getName();
         }
         second = new LocalPlayer(secondName, input);
     }
 
     private EnumMap<Result, Integer> receiveScoring() {
         EnumMap<Result, Integer> resultToScoring = new EnumMap<>(Result.class);
-        output.chooseScoreForWin();
+        messenger.chooseScoreForWin();
         resultToScoring.put(WIN, input.getInt());
-        output.chooseScoreForDraw();
+        messenger.chooseScoreForDraw();
         resultToScoring.put(DRAW, input.getInt());
-        output.chooseScoreForLost();
+        messenger.chooseScoreForLost();
         resultToScoring.put(LOSS, input.getInt());
         return resultToScoring;
     }
@@ -87,7 +84,7 @@ public class Match {
     private String getName() {
         String name = input.getString();
         while (!nameValidator.validate(name)) {
-            output.wrongName();
+            messenger.wrongName();
             name = input.getString();
         }
         return name;
