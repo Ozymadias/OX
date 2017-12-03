@@ -31,7 +31,7 @@ class Scoring {
     }
 
     void update(GameResults gameResults) {
-        for (Player player:playersScores.keySet()) {
+        for (Player player : playersScores.keySet()) {
             int previousScore = playersScores.getOrDefault(player, 0);
             int newScore = resultToScoring.get(gameResults.get(player));
             playersScores.put(player, previousScore + newScore);

@@ -16,20 +16,18 @@ class Game {
     private Board board;
     private Player current;
     private Map<Player, Sign> playerSign;
-    private SizeValidator validator;
 
     Game(Player first, Player second) {
         this.first = first;
         this.second = second;
         messenger = new Messenger();
-    }
-
-    GameResults play(Input input) {
         playerSign = new HashMap<>();
         playerSign.put(first, Sign.X);
         playerSign.put(second, Sign.O);
         current = first;
+    }
 
+    GameResults play(Input input) {
         createBoard(input);
 
         Optional<Sign> winner = Optional.empty();
@@ -43,19 +41,18 @@ class Game {
         changePlayer();
         messenger.show(board);
 
-        GameResults gameResult = new GameResults();
-        if (winner.isPresent()) {
+        if (winner.isPresent())
             messenger.announceWin(current.getName());
-            gameResult.put(current, Result.WIN);
-            gameResult.put(notCurrent(), Result.LOSS);
-            return gameResult;
-        }
-        if (board.isFull()) {
+        if (board.isFull())
             messenger.announceDraw();
-            gameResult.put(first, Result.DRAW);
-            gameResult.put(second, Result.DRAW);
+
+        if (winner.isPresent()) {
+            Win win = new Win();
+            win.put(current, Result.WIN);
+            win.put(notCurrent(), Result.LOSS);
+            return win;
         }
-        return gameResult;
+        return new Draw();
     }
 
     private Player notCurrent() {
@@ -83,7 +80,7 @@ class Game {
     }
 
     private boolean isPossible(Position position) {
-        return validator.validate(position) && board.isTaken(position);
+        return board.isValid(position) && board.isTaken(position);
     }
 
     private void changePlayer() {
@@ -107,7 +104,6 @@ class Game {
         }
 
         board = new Board(nbOfRows, nbOfColumns);
-        validator = new SizeValidator(nbOfRows, nbOfColumns);
         judge = new Judge(winningNb, board);
     }
 }

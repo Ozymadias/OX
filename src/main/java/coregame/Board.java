@@ -72,6 +72,18 @@ public class Board {
         return currentSign == sign;
     }
 
+    public boolean isValid(Position position) {
+        return validateRow(position.getRowNb()) && validateColumn(position.getColumnNb());
+    }
+
+    private boolean validateRow(int row) {
+        return row >= 0 && row < numberOfRows;
+    }
+
+    private boolean validateColumn(int column) {
+        return column >= 0 && column < numberOfColumns;
+    }
+
     private abstract class AbstractIterator implements MyIterator<Sign> {
         int row;
         int col;

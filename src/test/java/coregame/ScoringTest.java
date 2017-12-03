@@ -20,9 +20,9 @@ public class ScoringTest {
         scoring.register(player);
 
         //When
-        GameResults gameResults = new GameResults();
-        gameResults.put(player, Result.WIN);
-        scoring.update(gameResults);
+        Win win = new Win();
+        win.put(player, Result.WIN);
+        scoring.update(win);
 
         //Then
         Assert.assertEquals(scoring.get(player), 3);
@@ -43,9 +43,9 @@ public class ScoringTest {
         scoring.register(player);
 
         //When
-        GameResults gameResults = new GameResults();
-        gameResults.put(player, Result.WIN);
-        scoring.update(gameResults);
+        Win win = new Win();
+        win.put(player, Result.WIN);
+        scoring.update(win);
 
         //Then
         Assert.assertEquals(scoring.get(player), pointsForWin);

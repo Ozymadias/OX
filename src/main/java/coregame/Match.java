@@ -62,11 +62,11 @@ public class Match {
         String firstName = getName();
         first = new LocalPlayer(firstName, input);
 
-        String secondName = "";
-        while (secondName.equals("") || secondName.equals(firstName)) {
+        String secondName;
+        do {
             messenger.askSecondName();
             secondName = getName();
-        }
+        } while (secondName.equals(firstName));
         second = new LocalPlayer(secondName, input);
     }
 
