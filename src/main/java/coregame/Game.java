@@ -20,39 +20,38 @@ class Game {
     Game(Player first, Player second) {
         this.first = first;
         this.second = second;
+        current = first;
         messenger = new Messenger();
         playerSign = new HashMap<>();
         playerSign.put(first, Sign.X);
         playerSign.put(second, Sign.O);
-        current = first;
     }
 
     GameResults play(Input input) {
         createBoard(input);
 
         Optional<Sign> winner = Optional.empty();
-
         while (!winner.isPresent() && !board.isFull()) {
             makeMove();
             winner = judge.getWinner();
             changePlayer();
         }
 
-        changePlayer();
-        messenger.show(board);
+        announceGameResult();
 
-        if (winner.isPresent())
-            messenger.announceWin(current.getName());
+        if (board.isFull())
+            return new Draw();
+        Win win = new Win();
+        win.put(notCurrent(), Result.WIN);
+        win.put(current, Result.LOSS);
+        return win;
+    }
+
+    private void announceGameResult() {
+        messenger.show(board);
         if (board.isFull())
             messenger.announceDraw();
-
-        if (winner.isPresent()) {
-            Win win = new Win();
-            win.put(current, Result.WIN);
-            win.put(notCurrent(), Result.LOSS);
-            return win;
-        }
-        return new Draw();
+        messenger.announceWin(notCurrent().getName());
     }
 
     private Player notCurrent() {

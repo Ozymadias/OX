@@ -3,7 +3,7 @@ package coregame;
 import java.io.PrintStream;
 
 class Output {
-    public static PrintStream printStream = System.out;
+    static PrintStream printStream = System.out;
 
     static void print(String s) {
         printStream.println(s);
