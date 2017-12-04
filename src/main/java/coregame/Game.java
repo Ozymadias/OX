@@ -39,12 +39,13 @@ class Game {
 
         announceGameResult();
 
-        if (board.isFull())
-            return new Draw();
-        Win win = new Win();
-        win.put(notCurrent(), Result.WIN);
-        win.put(current, Result.LOSS);
-        return win;
+        if (winner.isPresent()) {
+            Win win = new Win();
+            win.put(notCurrent(), Result.WIN);
+            win.put(current, Result.LOSS);
+            return win;
+        }
+        return new Draw();
     }
 
     private void announceGameResult() {
